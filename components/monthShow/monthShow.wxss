@@ -1,0 +1,70 @@
+/* components/monthShow/monthShow.wxss */
+.monthShow {
+  width: 100%;
+  height: 100%;
+}
+.dateTitle {
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.titleItem {
+  width: 15%;
+  height: 50rpx;
+  text-align: center;
+  font-size: 24rpx;
+}
+.dateItem {
+  height: 100rpx;
+}
+.dateGrid {
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.gridItem {
+  width: 14.28%;
+  height: 180rpx;
+  text-align: center;
+  font-size: 24rpx;
+  border-top: 1px solid #DEDEDE;
+}
+.gridTitle {
+  text-align: left;
+  height: 40rpx;
+  padding-left: 20rpx;
+  padding-top: 10rpx;
+}
+.showIsDay {
+  margin-top: 4rpx;
+  padding-top: 6rpx;
+  background-color: #99BCAC; 
+  border-radius: 8rpx;
+  color: #fff;
+}
+.hasClick {
+  background-color: #D5EBE1; 
+  color: #333;
+}
+.clickDay {
+  margin-top: 4rpx;
+  background-color: #99BCAC; 
+  border-radius: 8rpx;
+  color: #fff;
+}
+.panelShow {
+  height: 40vh;
+  overflow-y: auto;
+}
+.addTask {
+  text-align: center;
+  margin: 40rpx 0;
+  font-weight: 800;
+  color: #80A492;
+}

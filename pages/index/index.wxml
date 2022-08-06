@@ -1,0 +1,38 @@
+<!--index.wxml-->
+<view class="calendar"> 
+  <view class="select_date">
+    <!-- 当前选择时间 -->
+    <view class="data-show" bindtap="showPop">
+      <view>{{thisYear}}年{{thisMonth}}月</view>
+      <van-icon name="arrow-down" class="data-down" />
+    </view>
+    <!-- 选择 日 || 月 -->
+    <view class="date-type">
+      <view class="{{ dateType === 'day' ? 'clickType': 'garyType' }}" bindtap="changeType" data-datetype="day">日</view>
+      <view class="{{ dateType === 'month' ? 'clickType': 'garyType' }}" bindtap="changeType" data-datetype="month">月</view>
+    </view>
+  </view>
+  <!-- <view>展示日期</view> -->
+  <!-- 日 展示 -->
+  <DayShow wx:if="{{dateType === 'day'}}" class="dayShow" isDate="{{calendar.daysArr}}" isTime="{{currentDate}}"/>
+  <!-- 月 展示 -->
+  <MonthShow wx:if="{{dateType === 'month'}}" class="monthShow" isDate="{{calendar.daysArr}}" isTime="{{currentDate}}"/>
+  <!-- 时间弹框 -->
+  <van-popup
+    show="{{ popCanShow }}"
+    position="bottom"
+    round
+    custom-style="height: 50%;"
+    bind:close="closePop"
+  >
+    <van-datetime-picker
+      type="year-month"
+      value="{{ currentDate }}"
+      min-date="{{ minSelectDate }}"
+      bind:confirm="changeDate"
+      bind:cancel="closePop"
+    />
+  </van-popup>
+  <!-- 新增图标 -->
+  <AddIcon></AddIcon>
+</view>

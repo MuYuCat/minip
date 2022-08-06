@@ -1,0 +1,6 @@
+.vip{
+  text-align: center;
+  vertical-align: middle;
+  height: 100vh;
+  line-height: 100vh;
+}

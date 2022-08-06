@@ -1,0 +1,25 @@
+<!--components/monthShow/monthShow.wxml-->
+<view class="monthShow"> 
+  <!-- 日期 title -->
+  <view class="dateTitle">
+    <view class="titleItem" wx:for="{{dateShow}}" wx:for-item='titleItem' wx:key='titleItem'>
+      {{titleItem}}
+    </view>
+  </view>
+  <!-- 日期 方块 -->
+  <view class="dateGrid">
+    <view class="gridItem" wx:for="{{isDate}}" wx:for-item='gridItem' wx:key='gridItem' bindtap="changeClickDay" data-isTime="{{gridItem}}" data-sysTime="{{isTime}}">
+      <view class="{{!!isSelectDay? isSelectDay == gridItem? 'gridTitle showIsDay': thisDay == gridItem? 'gridTitle showIsDay hasClick': 'gridTitle': thisDay == gridItem ? 'gridTitle showIsDay' : 'gridTitle'}}">{{gridItem || ''}}</view>
+      <view class="gridContent" wx:if="{{gridItem}}"></view>
+    </view>
+  </view>
+  <!-- 展示活动信息 -->
+  <van-action-sheet show="{{ showPanel }}" title="{{panelTitle}}"  bind:close="closePanel" close-on-click-overlay='true' z-index="{{150}}">
+    <view class="panelShow">
+      测试数据
+    </view>
+    <view class="addTask" bindtap="jump2Add">
+      + 新建活动
+    </view>
+  </van-action-sheet>
+</view>

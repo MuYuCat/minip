@@ -1,0 +1,4 @@
+<!--components/addIcon/addIcon.wxml-->
+<view class="isAddTask" bindtap="jump2Add">
+  <image class="isAddIcon" src="../../image/add.png"></image>
+</view>

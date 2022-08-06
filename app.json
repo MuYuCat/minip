@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/list/index",
+    "pages/member/index",
+    "pages/addTask/index"
+  ],
+  "tabBar": {
+    "custom": false,
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "日历",
+        "iconPath": "/image/home_normal.png",
+        "selectedIconPath": "/image/home_click.png"
+      },
+      {
+        "pagePath": "pages/list/index",
+        "text": "活动",
+        "iconPath": "/image/list_normal.png",
+        "selectedIconPath": "/image/list_click.png"
+      },
+      {
+        "pagePath": "pages/member/index",
+        "text": "我的",
+        "iconPath": "/image/my_normal.png",
+        "selectedIconPath": "/image/my_click.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "学习日历",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

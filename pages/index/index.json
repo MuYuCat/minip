@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "学习日历",
+  "usingComponents": {
+    "van-icon": "@vant/weapp/icon/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-transition": "@vant/weapp/transition/index",
+    "DayShow": "/components/dayShow/dayShow",
+    "MonthShow": "/components/monthShow/monthShow",
+    "addIcon": "/components/addIcon/addIcon"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "*.art": "html",
+    ".eslinktrc": "json",
+    ". eslintrc": "json",
+    "*.cjson": "jsonc",
+    "*.wxss": "css",
+    "*.wxs": "javascript",
+    "*.wxml": "html"
+  }
+}

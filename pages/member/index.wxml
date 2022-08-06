@@ -1,0 +1,4 @@
+<view class="vip">
+  待开发, 敬请期待......
+  {{userInfo.openid}}
+</view>

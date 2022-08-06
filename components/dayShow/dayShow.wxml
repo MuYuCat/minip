@@ -1,0 +1,25 @@
+<!--components/dayShow/dayShow.wxml-->
+<view class="dayShow"> 
+  <!-- 日期 title -->
+  <view class="dateTitle">
+    <view class="titleItem" wx:for="{{dateShow}}" wx:for-item='titleItem' wx:key='titleItem'>
+      {{titleItem}}
+    </view>
+  </view>
+  <!-- 日期 方块 -->
+  <view class="{{!showLess ? 'dateGrid' : 'dateGrid dateGridLess'}}">
+    <view class="gridItem" wx:for="{{isDate}}" wx:for-item='gridItem' wx:key='gridItem' bindtap="changeClickDay" data-isTime="{{gridItem}}" data-sysTime="{{isTime}}">
+      <view class="{{!!isSelectDay? isSelectDay == gridItem? 'gridTitle showIsDay': thisDay == gridItem? 'gridTitle showIsDay hasClick': 'gridTitle': thisDay == gridItem ? 'gridTitle showIsDay' : 'gridTitle'}}">{{gridItem || ''}}</view>
+    </view>
+  </view>
+  <view class="showLess" bindtap="changeShowLess">
+    <van-icon name="arrow-down" wx:if="{{showLess}}"/>
+    <van-icon name="arrow-up" wx:else />
+  </view>
+  <!-- 展示活动信息 -->
+  <view class="isDayPanel">
+    <view class="panelShow">
+      测试数据
+    </view>
+  </view>
+</view>

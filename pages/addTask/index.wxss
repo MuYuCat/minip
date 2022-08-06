@@ -1,0 +1,172 @@
+.createTask{
+  /* text-align: center;
+  vertical-align: middle; */
+  height: 100vh;
+  /* line-height: 100vh; */
+  background-color: #F3F4F5;
+}
+.van-cell__title {
+  color:#999999;
+  font-size: 16px;
+}
+.taskItem {
+  /* height: 300rpx; */
+  /* border-radius: 36rpx; */
+  background-color: #fff;
+  padding-bottom: 40rpx;
+}
+.nameTitle {
+  margin-top: 20rpx;
+  font-size: 32rpx;
+  padding-left: 30rpx;
+  color: #333;
+}
+.timeFlex {
+  margin-bottom: 16rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.selectTime {
+  width: 60%;
+  height: 70rpx;
+  margin-top: 20rpx;
+  margin-left: 60rpx;
+  font-size: 28rpx;
+  background-color: #D8D8D8;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  color: #333;
+}
+.selectTimeList {
+  margin-left: 30rpx;
+  width: 80%;
+}
+.clickType {
+  width: 74px;
+  height: 50rpx;
+  text-align: center;
+  border-radius: 16rpx;
+  background-color: #fff;
+  padding-top: 6rpx;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.0400);
+}
+.garyType {
+  width: 74px;
+  height: 44rpx;
+  text-align: center;
+}
+.addTask {
+  height: 70rpx;
+  line-height: 70rpx;
+  padding: 20rpx 0;
+  font-size: 32rpx;
+  padding-left: 30rpx;
+  color: #333;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #eee;
+  margin: 60rpx 40rpx 10rpx 40rpx;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.0400);
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.isAddTaskIcon {
+  height: 40rpx;
+  width: 40rpx;
+  margin-right: 20rpx;
+}
+.taskList {
+  /* height: 200rpx; */
+  /* width: 100%; */
+  border: 1px solid #ccc;
+  margin: 10px 5%;
+  border-radius: 30rpx;
+}
+.taskListDel {
+  height: 100%;
+  width: 200rpx;
+  border-radius: 0 30rpx 30rpx 0rpx;
+  text-align: center;
+  /* margin: auto 0; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(238,121,89, 0.7);
+  color: #fff;
+}
+.taskListDelLeft {
+  border-radius: 30rpx 0 0 30rpx;
+}
+.taskCard {
+  padding: 0 40rpx;
+}
+.timeList .van-cell__title {
+  color: #333;
+}
+.timeList .van-cell__value {
+  font-size: 30rpx;
+}
+.timeList .van-cell {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.childDate .van-cell--large .van-cell__value {
+  font-size: 13px;
+  color: #ccc;
+}
+
+
+
+
+
+
+.btn {
+  /* margin-top: 80rpx; */
+  height: 70rpx;
+  line-height: 70rpx;
+  width: 100%;
+  padding: 40rpx 0;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  /* position: fixed; */
+  /* bottom: 50rpx; */
+  /* z-index: 99; */
+}
+.cancleTask {
+  width: 35%;
+  text-align: center;
+  border: 1px solid #eee;
+  border-radius: 20rpx;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.0400);
+}
+.confirmTask {
+  width: 35%;
+  text-align: center;
+  border: 1px solid #eee;
+  border-radius: 20rpx;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.0400);
+}
+.redFont .van-cell__title {
+  color: #ee0a24;
+}
+.redBorder {
+  border-color: #ee0a24;
+}

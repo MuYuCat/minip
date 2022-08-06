@@ -1,0 +1,28 @@
+<view class="taskList">
+  <!-- 待完成 -->
+  <view class="taskName" bindtap="closeFinish" data-type="noFinish">
+    <van-icon name="arrow-down" wx:if="{{showNoFinish}}" />
+    <van-icon name="arrow" wx:else />
+    <view class="isTitle">待完成</view>
+  </view>
+  <!-- 待完成数据 -->
+  <view wx:if="{{showNoFinish}}" class="ifShow">
+    <view wx:for="{{taskData}}" wx:for-item='taskItem' wx:key='taskItem' class="taskItem noFinish">
+      <view class=""></view>
+    </view>
+  </view>
+  <!-- 已完成 -->
+  <view class="taskName" bindtap="closeFinish" data-type="isFinish">
+    <van-icon name="arrow-down" wx:if="{{showFinish}}" />
+    <van-icon name="arrow" wx:else />
+    <view class="isTitle">已完成</view>
+  </view>
+  <!-- 已完成数据 -->
+  <view wx:if="{{showFinish}}" class="ifShow">
+    <view wx:for="{{taskData}}" wx:for-item='taskItem' wx:key='taskItem' class="taskItem isFinish">
+      <view class=""></view>
+    </view>
+  </view>
+  <!-- 新增活动图标 -->
+  <AddIcon ></AddIcon>
+</view>

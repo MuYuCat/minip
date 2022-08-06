@@ -1,0 +1,146 @@
+<view class="createTask">
+  <view class="taskItem">
+  <!-- 活动名称 -->
+    <view class="nameTitle" bindtap="showAllData">
+      <van-icon name="star" color="#EA5514"/>
+      活动名称
+    </view>
+    <van-field
+      placeholder-style="{{errorMsg == 'taskName' ? 'color: #ee0a24' : 'color: #999'}}"
+      model:value="{{ taskName }}"
+      placeholder="{{ taskName ? '' : '请输入活动名称' }}"
+      focus="true"
+      clearable="true"
+      auto-focus="true"
+      size="large"
+      border="{{ true }}"
+    />
+  <!-- 活动时间 -->
+    <view class="timeFlex">
+      <view class="nameTitle">
+        <van-icon name="star" color="#EA5514"/>
+        活动时间
+      </view>
+      <view class="selectTime">
+        <view class="{{ dateType === 'single' ? 'clickType': 'garyType' }}" bindtap="changeType" data-datetype="single">单个日期</view>
+        <view class="{{ dateType === 'multiple' ? 'clickType': 'garyType' }}" bindtap="changeType" data-datetype="multiple">多个日期</view>
+        <view class="{{ dateType === 'range' ? 'clickType': 'garyType' }}" bindtap="changeType" data-datetype="range">区间日期</view>
+      </view>
+    </view>
+    <van-cell title="{{timeTitle}}" value="{{ selectDate }}" bind:click="onDisplay" class="{{errorMsg == 'taskTime' && !selectDate ? 'redFont' : ''}}" />
+  <!-- 活动描述 -->
+    <view class="nameTitle">活动概述</view>
+    <van-field
+    model:value="{{ taskMsg }}"
+      placeholder-style="color: #999"
+      size="large"
+      type="textarea"
+      placeholder="请输入活动概况"
+      clearable="{{true}}"
+      autosize
+      border="{{ true }}"
+    />
+  <!-- 子活动列表 -->
+    <view class="{{errorMsg=='child-'+ taskIndex + '-taskName' || errorMsg=='child-'+ taskIndex + '-taskTime' ? 'taskList redBorder' : 'taskList'}}" wx:for="{{taskList}}" wx:for-item='taskItem' wx:key='taskItem' wx:for-index='taskIndex'>
+      <van-swipe-cell right-width="{{ 100 }}" left-width="{{ 100 }}" bind:click="selTaskList" data-taskindex="{{taskIndex}}">
+        <view slot="right" class="taskListDel">删除</view> 
+        <view slot="left" class="taskListDel taskListDelLeft">删除</view> 
+        <view class="taskCard">
+        <!-- 子活动名称 -->
+          <van-field
+            label="子活动名称"
+            placeholder-style="{{errorMsg == 'child-'+ taskIndex + '-taskName' ? 'color: #ee0a24' : 'color: #999'}}"
+            value="{{ taskItem.taskName }}"
+            placeholder="{{ taskItem.taskName ? '' : '请输入子活动名称' }}"
+            bind:input="changeChildName"
+            data-taskindex="{{taskIndex}}"
+            focus="true"
+            clearable="true"
+            auto-focus="true"
+            size="large"
+            border="{{ false }}"
+            required="{true}"
+          />
+          <!-- 子活动时间 -->
+          <!-- 选择时间类型 -->
+          <view class="timeFlex">
+            <view class="selectTime selectTimeList" wx:if="{{dateType !== 'single'}}">
+              <view class="{{ taskItem.dateType === 'single' ? 'clickType': 'garyType' }}" bindtap="changeTypeList" data-datetypelist="single" data-taskindex="{{taskIndex}}">单个日期</view>
+              <view wx:if="{{dateType == 'range' || dateType == 'multiple'}}" class="{{ taskItem.dateType === 'multiple' ? 'clickType': 'garyType' }}" bindtap="changeTypeList" data-datetypelist="multiple" data-taskindex="{{taskIndex}}">多个日期</view>
+              <view wx:if="{{dateType == 'range'}}" class="{{ taskItem.dateType === 'range' ? 'clickType': 'garyType' }}" bindtap="changeTypeList" data-datetypelist="range" data-taskindex="{{taskIndex}}">区间日期</view>
+            </view>
+          </view>
+          <!-- 展示选择时间 -->
+          <van-field
+            label="子活动时间"
+            class="{{isChildType=='range' ? 'childDate' : ''}}"
+            placeholder-style="{{errorMsg == 'child-'+ taskIndex + '-taskTime' ? 'color: #ee0a24; font-size: 16px' : 'color: #999; font-size: 16px'}}"
+            value="{{ taskItem.selectDate }}"
+            placeholder="{{ taskItem.selectDate ? '' : '请选择子活动时间' }}"
+            bind:click-input="onDisplayList"  
+            data-childdatetype="{{taskItem.dateType}}"
+            data-childdateindex="{{taskIndex}}"
+            size="large"
+            readonly
+            border="{{ false }}"
+            required="{true}"
+          />
+          <!-- 活动描述 -->
+          <van-field
+            label="子活动描述"
+            value="{{ taskItem.taskMsg }}"
+            placeholder-style="color: #999"
+            size="large"
+            type="textarea"
+            bind:input="changeChildMsg"
+            data-taskindex="{{taskIndex}}"
+            placeholder="请输入活动概况"
+            clearable="{{true}}"
+            autosize
+            border="{{ false }}"
+          />
+        </view>
+      </van-swipe-cell>
+    </view>
+  <!-- 添加子活动 -->
+    <view class="addTask" bindtap="addTaskList">
+      <image class="isAddTaskIcon" src="../../image/addTask.png"></image>
+      <view>添加子活动</view>
+    </view>
+  <!-- 时间选择器 -->
+    <van-calendar
+      class="thisCalendar"
+      show="{{ showCalender }}"
+      type="{{isDateType}}"
+      min-date="{{ minDate }}"
+      max-date="{{ maxDate }}"
+      bind:close="onClose"
+      bind:confirm="onConfirm"
+      color="#80A492"
+    />
+  <!-- 部分子活动时间选择器 -->
+    <van-popup
+      show="{{ showPicker }}"
+      position="bottom"
+      custom-style="height: 40%;"
+      round
+      bind:close="onClosePicker"
+    >
+      <van-picker 
+        columns="{{ timeArr }}" 
+        bind:cancel="onCanclePicker"
+        bind:confirm="onConfirmPicker" 
+        show-toolbar="{{true}}"
+        confirm-button-text="{{confirmText}}"
+        cancel-button-text="{{calcleText}}"
+      />
+    </van-popup>
+  <!-- 操作处理 -->
+    <view class="btn">
+      <view class="cancleTask" bindtap="cancleTask">取消</view>
+      <view class="confirmTask" bindtap="confirmTask">确定</view>
+    </view>
+  <van-notify id="van-notify" />
+  <van-toast id="van-toast" />
+  </view>
+</view>

@@ -1,0 +1,21 @@
+/* components/addTask/addTask.wxss */
+.isAddTask {
+  position: fixed;
+  bottom: 50rpx;
+  right: 20rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: #99BCAC;
+  z-index: 100;
+  box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.isAddIcon {
+  height: 80rpx;
+  width: 80rpx;
+  color: #fff;
+}

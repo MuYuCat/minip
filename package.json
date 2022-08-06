@@ -1,0 +1,30 @@
+{
+  "name": "minip",
+  "version": "1.0.0",
+  "description": "小程序",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MuYuCat/minip.git"
+  },
+  "keywords": [
+    "小程序",
+    "minip",
+    "time",
+    "study"
+  ],
+  "author": "MuYUCat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MuYuCat/minip/issues"
+  },
+  "homepage": "https://github.com/MuYuCat/minip#readme",
+  "dependencies": {
+    "@vant/weapp": "^1.10.3",
+    "dayjs": "^1.11.3",
+    "weui-miniprogram": "^1.2.3"
+  }
+}

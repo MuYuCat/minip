@@ -1,0 +1,36 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "首页",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "列表",
+          "pathName": "pages/list/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "新增活动",
+          "pathName": "pages/addTask/index",
+          "query": "time=undefined",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "新增活动",
+  "usingComponents": {
+    "van-cell": "@vant/weapp/cell/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-calendar": "@vant/weapp/calendar/index",
+    "van-swipe-cell": "@vant/weapp/swipe-cell/index",
+    "van-notify": "@vant/weapp/notify/index",
+    "van-toast": "@vant/weapp/toast/index",
+    "van-picker": "@vant/weapp/picker/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-icon": "@vant/weapp/icon/index"
+  }
+}
