@@ -14,6 +14,7 @@
       auto-focus="true"
       size="large"
       border="{{ true }}"
+      disabled="{{type == 'view'}}"
     />
   <!-- 活动时间 -->
     <view class="timeFlex">
@@ -21,7 +22,7 @@
         <van-icon name="star" color="#EA5514"/>
         活动时间
       </view>
-      <view class="selectTime">
+      <view class="{{ type !== 'view' ? 'selectTime' : 'selectTime opacityShow'}}">
         <view class="{{ dateType === 'single' ? 'clickType': 'garyType' }}" bindtap="changeType" data-datetype="single">单个日期</view>
         <view class="{{ dateType === 'multiple' ? 'clickType': 'garyType' }}" bindtap="changeType" data-datetype="multiple">多个日期</view>
         <view class="{{ dateType === 'range' ? 'clickType': 'garyType' }}" bindtap="changeType" data-datetype="range">区间日期</view>
@@ -31,7 +32,7 @@
   <!-- 活动描述 -->
     <view class="nameTitle">活动概述</view>
     <van-field
-    model:value="{{ taskMsg }}"
+      model:value="{{type !== 'view' ? taskMsg : taskMsg || ' ' }}"
       placeholder-style="color: #999"
       size="large"
       type="textarea"
@@ -39,6 +40,7 @@
       clearable="{{true}}"
       autosize
       border="{{ true }}"
+      disabled="{{type == 'view'}}"
     />
   <!-- 子活动列表 -->
     <view class="{{errorMsg=='child-'+ taskIndex + '-taskName' || errorMsg=='child-'+ taskIndex + '-taskTime' ? 'taskList redBorder' : 'taskList'}}" wx:for="{{taskList}}" wx:for-item='taskItem' wx:key='taskItem' wx:for-index='taskIndex'>
@@ -60,11 +62,12 @@
             size="large"
             border="{{ false }}"
             required="{true}"
+            disabled="{{type == 'view'}}"
           />
           <!-- 子活动时间 -->
           <!-- 选择时间类型 -->
           <view class="timeFlex">
-            <view class="selectTime selectTimeList" wx:if="{{dateType !== 'single'}}">
+            <view class="{{ type !== 'view' ? 'selectTime selectTimeList' : 'selectTime selectTimeList opacityShow'}}" wx:if="{{dateType !== 'single'}}">
               <view class="{{ taskItem.dateType === 'single' ? 'clickType': 'garyType' }}" bindtap="changeTypeList" data-datetypelist="single" data-taskindex="{{taskIndex}}">单个日期</view>
               <view wx:if="{{dateType == 'range' || dateType == 'multiple'}}" class="{{ taskItem.dateType === 'multiple' ? 'clickType': 'garyType' }}" bindtap="changeTypeList" data-datetypelist="multiple" data-taskindex="{{taskIndex}}">多个日期</view>
               <view wx:if="{{dateType == 'range'}}" class="{{ taskItem.dateType === 'range' ? 'clickType': 'garyType' }}" bindtap="changeTypeList" data-datetypelist="range" data-taskindex="{{taskIndex}}">区间日期</view>
@@ -84,11 +87,12 @@
             readonly
             border="{{ false }}"
             required="{true}"
+            disabled="{{type == 'view'}}"
           />
           <!-- 活动描述 -->
           <van-field
             label="子活动描述"
-            value="{{ taskItem.taskMsg }}"
+            value="{{type !== 'view' ? taskItem.taskMsg : taskItem.taskMsg || ' ' }}"
             placeholder-style="color: #999"
             size="large"
             type="textarea"
@@ -98,12 +102,13 @@
             clearable="{{true}}"
             autosize
             border="{{ false }}"
+            disabled="{{type == 'view'}}"
           />
         </view>
       </van-swipe-cell>
     </view>
   <!-- 添加子活动 -->
-    <view class="addTask" bindtap="addTaskList">
+    <view class="addTask" bindtap="addTaskList" wx:if="{{type !== 'view'}}">
       <image class="isAddTaskIcon" src="../../image/addTask.png"></image>
       <view>添加子活动</view>
     </view>
@@ -136,7 +141,7 @@
       />
     </van-popup>
   <!-- 操作处理 -->
-    <view class="btn">
+    <view class="btn" wx:if="{{type !== 'view'}}">
       <view class="cancleTask" bindtap="cancleTask">取消</view>
       <view class="confirmTask" bindtap="confirmTask">确定</view>
     </view>

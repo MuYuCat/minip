@@ -1,4 +1,7 @@
 <view class="vip">
-  待开发, 敬请期待......
-  {{userInfo.openid}}
+  <!-- 展示缺省图 -->
+  <view class="errorPage">
+    <image class="errorIcon" src="../../image/error_user_show.png"></image>
+    <view class="errorMsg">待开发, 敬请期待......</view>
+  </view>
 </view>

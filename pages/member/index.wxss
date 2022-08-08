@@ -1,6 +1,23 @@
 .vip{
   text-align: center;
   vertical-align: middle;
+  /* height: 100vh;
+  line-height: 100vh; */
+}
+.errorPage {
   height: 100vh;
-  line-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  justify-content: flex-start;
+  align-items: center;
+}
+.errorIcon {
+  width: 400rpx;
+  height: 400rpx;
+}
+.errorMsg {
+  height: 50rpx;
+  width: 300rpx;
 }

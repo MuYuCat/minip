@@ -40,13 +40,13 @@ const chackData =(data) => {
   return isResult;
 }
 
-const isFinishTask = (data) => {
+const getStatus = (data) => {
   switch (data.dateType) {
     case 'multiple' : {
       const dateArr = data.dateArr.split(',');
-      if (dayjs().isBefore(dayjs(dateArr[0]))) {
+      if (dayjs().isBefore(dayjs(dateArr[0]), 'day')) {
         return 'before';
-      } else if (dayjs().isAfter(dayjs(dateArr[dateArr.length-1]))) {
+      } else if (dayjs().isAfter(dayjs(dateArr[dateArr.length-1]), 'day')) {
         return 'after';
       } else if (data.dateArr.includes(dayjs().format('YYYY-MM-DD'))) {
         return 'ing';
@@ -54,10 +54,19 @@ const isFinishTask = (data) => {
         return 'between';
       }
     }
-    default: {
-      if (dayjs().isBefore(dayjs(data.beginTime))) {
+    case 'single' : {
+      if (dayjs().isBefore(dayjs(data.beginTime), 'day')) {
         return 'before';
-      } else if (dayjs().isAfter(dayjs(data.beginTime))) {
+      } else if (dayjs().isAfter(dayjs(data.beginTime), 'day')) {
+        return 'after';
+      } else {
+        return 'ing';
+      }
+    }
+    default: {
+      if (dayjs().isBefore(dayjs(data.beginTime), 'day')) {
+        return 'before';
+      } else if (dayjs().isAfter(dayjs(data.endTime), 'day')) {
         return 'after';
       } else {
         return 'ing';
@@ -68,5 +77,5 @@ const isFinishTask = (data) => {
 
 module.exports = {
   chackData,
-  isFinishTask
+  getStatus
 }

@@ -12,6 +12,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    type: '', // 页面类型 是否为view
     // 上传数据
     userId: '', // 用户id
     taskName: '', // 活动名称
@@ -21,6 +22,7 @@ Page({
     beginTime: '', // 活动开始时间
     endTime: '', // 活动结束时间
     timeArr: [], // 多个活动时间的数组
+    timeTitle: '点击选择活动时间', // 日历时间的提示语
     taskList: [], // 子活动列表
     // 本地数据
     showCalender: false, // 是否打开日历选择器
@@ -28,7 +30,6 @@ Page({
     isDateType: 'range', // 选择日历的类型 默认区间日期
     minDate: new Date(+dayjs().year()-1, +dayjs().month(), dayjs().date()).getTime(),// 时间日历的最小时间
     maxDate: new Date(+dayjs().year()+1, +dayjs().month(), dayjs().date()).getTime(), // 时间日历的最大时间
-    timeTitle: '点击选择活动时间', // 日历时间的提示语
     isChildIndex: '', // 是否为子活动选择区间日期
     isChildType: '', // 子活动时间类型
     childChooseDate: [], // 子活动已选择日期
@@ -39,6 +40,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options);
+    if (options.type) {
+      this.setData({
+        type: options.type
+      })
+    }
     if (options.taskData) {
       const taskData = JSON.parse(options.taskData);
       console.log(options.taskData, taskData);
@@ -52,6 +59,7 @@ Page({
         endTime: taskData.endTime || '', // 活动结束时间
         dateArr: taskData.dateArr || '', // 多个活动时间的数组
         timeArr: taskData.timeArr || '', // 多个活动时间的数组
+        timeTitle: taskData.timeTitle || '点击选择活动时间', // 多个活动时间的数组
         taskList: taskData.taskList || '', // 子活动列表
       });
       wx.setNavigationBarTitle({
@@ -64,9 +72,13 @@ Page({
         userId: getApp().globalData.userInfo.openid,
       });
     }
+    options.type == 'view' && wx.setNavigationBarTitle({
+      title: '查看活动'
+    })
   },
   // 展开时间日历
   onDisplay() {
+    if (this.data.type == 'view') return
     if (this.data.taskList.length == 0) {
       Notify({ type: 'warning', message: '主活动时间在添加子活动后不可修改，请妥善选择' });
       if (!this.data.isChildIndex) {
@@ -94,6 +106,7 @@ Page({
   },
   // 修改展示类型
   changeType(e) {
+    if (this.data.type == 'view') return
     if (this.data.taskList.length == 0) {
       console.log('changeType', e);
       const dateType = e.currentTarget.dataset['datetype'];
@@ -229,6 +242,7 @@ Page({
   },
   // 子活动修改时间类型
   changeTypeList (e) {
+    if (this.data.type == 'view') return
     const taskDateType = e.currentTarget.dataset.datetypelist;
     const taskIndex = e.currentTarget.dataset.taskindex;
     this.setData({
@@ -241,6 +255,7 @@ Page({
   },
   // 点开子活动的时间选择器
   onDisplayList (e) {
+    if (this.data.type == 'view') return
     const childdateindex = e.currentTarget.dataset.childdateindex;
     const childdatetype = e.currentTarget.dataset.childdatetype;
     console.log(e.currentTarget.dataset.childdateindex, e.currentTarget.dataset.childdatetype);
@@ -391,6 +406,7 @@ Page({
         dateArr: self.timeArr,
         selectDate: self.selectDate,
         taskMsg: self.taskMsg,
+        timeTitle: self.timeTitle,
         taskList: JSON.stringify(self.taskList),
       },
       header: {

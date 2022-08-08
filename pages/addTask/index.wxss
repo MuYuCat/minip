@@ -42,6 +42,9 @@
   justify-content: space-evenly;
   color: #333;
 }
+.opacityShow {
+  opacity: 0.5;
+}
 .selectTimeList {
   margin-left: 30rpx;
   width: 80%;
