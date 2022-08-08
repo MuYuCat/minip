@@ -7,8 +7,14 @@
   </view>
   <!-- 待完成数据 -->
   <view wx:if="{{showNoFinish}}" class="ifShow">
-    <view wx:for="{{taskData}}" wx:for-item='taskItem' wx:key='taskItem' class="taskItem noFinish">
-      <view class=""></view>
+    <view wx:for="{{taskData}}" wx:for-item='taskItem' wx:key='index' class="taskItem noFinish">
+      <view class="taskContent" bindtap="jump2show" data-index="{{index}}">
+        <view class="taskName">{{taskItem.taskName}}</view>
+        <view class="taskMsg">{{taskItem.taskMsg}}</view>
+        <view class="taskDate">{{taskItem.selectDate}}</view>
+      </view>
+      <!-- <image class="taskIcon" src="../../image/no_sign_in.png"></image> -->
+      <image class="taskIcon" src="../../image/sign_in.png"></image>
     </view>
   </view>
   <!-- 已完成 -->
@@ -19,8 +25,13 @@
   </view>
   <!-- 已完成数据 -->
   <view wx:if="{{showFinish}}" class="ifShow">
-    <view wx:for="{{taskData}}" wx:for-item='taskItem' wx:key='taskItem' class="taskItem isFinish">
-      <view class=""></view>
+    <view wx:for="{{taskData}}" wx:for-item='taskItem' wx:key='taskItem' class="taskItem noFinish">
+      <view class="taskContent">
+        <view class="taskName">{{taskItem.taskName}}</view>
+        <view class="taskMsg">{{taskItem.taskMsg}}</view>
+        <view class="taskDate">{{taskItem.selectDate}}</view>
+      </view>
+      <image class="taskIconFinish" src="../../image/task_no_finish.png"></image>
     </view>
   </view>
   <!-- 新增活动图标 -->

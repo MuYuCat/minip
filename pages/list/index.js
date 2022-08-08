@@ -1,128 +1,80 @@
 // pages/index/index.js
+import { baseUrl } from '../../config/api';
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    userInfo: {}, // 用户信息
     showNoFinish: true, // 是否展示待完成
     showFinish: true, // 是否展示已完成
-    taskData: [
-      {
-        title: '测试数据',
-        beginTime: '2022-8-21',
-        endTime: '2022-8-25',
-        totalNum: '100',
-        finishNum: '10'
-      },
-      {
-        title: '测试数据',
-        beginTime: '2022-8-21',
-        endTime: '2022-8-25',
-        totalNum: '100',
-        finishNum: '10'
-      },
-      {
-        title: '测试数据',
-        beginTime: '2022-8-21',
-        endTime: '2022-8-25',
-        totalNum: '100',
-        finishNum: '10'
-      },
-      {
-        title: '测试数据',
-        beginTime: '2022-8-21',
-        endTime: '2022-8-25',
-        totalNum: '100',
-        finishNum: '10'
-      },
-      {
-        title: '测试数据',
-        beginTime: '2022-8-21',
-        endTime: '2022-8-25',
-        totalNum: '100',
-        finishNum: '10'
-      },
-      {
-        title: '测试数据',
-        beginTime: '2022-8-21',
-        endTime: '2022-8-25',
-        totalNum: '100',
-        finishNum: '10'
-      },
-      {
-        title: '测试数据1',
-        beginTime: '2022-8-21',
-        endTime: '2022-8-25',
-        totalNum: '100',
-        finishNum: '10'
-      }
-    ]
-
+    taskData: [{
+      beginTime: "2022-08-07",
+      created_at: "2022-08-07T05:47:04.000Z",
+      dateArr: "",
+      dateType: "range",
+      endTime: "2022-08-31",
+      selectDate: "2022-08-07 - 2022-08-31",
+      taskId: "5ddee880-1614-11ed-a4cf-0706b763227e",
+      taskList: [],
+      taskMsg: "",
+      taskName: "测试重新加载",
+      updated_at: "2022-08-07T05:47:05.000Z",
+      userId: "ozLr04tqWf0_mvkzyQgu9cwDH9zs",
+    }], // 活动列表
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-
+    // 获取用户信息
+    console.log(getApp().globalData.userInfo);
+    this.setData({
+      userInfo: getApp().globalData.userInfo,
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  // 自定义tab切换
   onShow: function () {
-    if (typeof this.getTabBar === 'function' &&
-    this.getTabBar()) {
-      this.getTabBar().setData({
-        selected: 1
-      })
-    }
+    this.onLoad();
+    this.getTask(getApp().globalData.userInfo && getApp().globalData.userInfo.openid || '');
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  // userId 查找Task
+  getTask (id) {
+    var self = this;
+    wx.request({
+      url: `${baseUrl}/wxTask/findByUserId`,
+      data: {
+        userId: id
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: 'POST',
+      success(data){
+        if(data.data.code == 200) {
+          console.log('查询用户信息', data.data.data);
+          const userTaskData = data.data.data;
+          self.setData({
+            taskData: userTaskData
+          })
+        } else {
+          // 查询不到用户信息/新增用户
+          console.log('查询不到用户信息', data);
+        }
+      },
+      file: res => {
+        // 未查询到用户信息/弹toast/显示未登陆
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  // 跳转到详情
+  jump2show(e){
+    const index = e.currentTarget.dataset.index;
+    wx.navigateTo({
+      url: `/pages/addTask/index?taskData=${JSON.stringify(this.data.taskData[index])}`
+    })
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
   // 关闭已完成部分
   closeFinish: function (e) {
     const type = e.currentTarget.dataset.type;

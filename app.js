@@ -42,12 +42,9 @@ App({
       method: 'POST',
       success(data){
         if(data.data.code == 200) {
-          // console.log('查询用户信息', data);
-          // 查询到用户信息/跳转信息页面
           self.globalData.userInfo = data.data.data.rows[0];
         } else {
           // 查询不到用户信息/新增用户
-          // console.log('查询不到用户信息', data);
           self.addUser(id);
         }
       },

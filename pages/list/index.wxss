@@ -34,6 +34,46 @@
   background-color: #EBEEE8; 
   /* // #D5EBE1; */
   margin: 15rpx 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: flex-start;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.0400);
+}
+.taskContent {
+  height: 160rpx;
+  width: 70%;
+  margin-left: 20rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: flex-start;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+.taskName {
+  font-size: 42rpx;
+}
+.taskMsg {
+  font-size: 26rpx;
+  color: #585248;
+}
+.taskDate {
+  font-size: 30rpx;
+  color: #585248;
+}
+.taskIcon {
+  width: 160rpx;
+  height: 160rpx;
+}
+.taskIconFinish {
+  width: 130rpx;
+  height: 130rpx;
 }
 .noFinish {
   background-color: #D5EBE1; 

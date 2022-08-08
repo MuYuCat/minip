@@ -39,16 +39,42 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 获取用户信息
-    console.log(getApp().globalData.userInfo);
-    this.setData({
-      userId: getApp().globalData.userInfo.openid,
-    });
+    if (options.taskData) {
+      const taskData = JSON.parse(options.taskData);
+      console.log(options.taskData, taskData);
+      this.setData({
+        userId: taskData.userId || '', // 用户id
+        taskName: taskData.taskName || '', // 活动名称
+        taskMsg: taskData.taskMsg || '', // 活动概况
+        dateType: taskData.dateType || '', // 主活动的时间类型 默认区间日期
+        selectDate: taskData.selectDate || '', // 时间日历所选择时间
+        beginTime: taskData.beginTime || '', // 活动开始时间
+        endTime: taskData.endTime || '', // 活动结束时间
+        dateArr: taskData.dateArr || '', // 多个活动时间的数组
+        timeArr: taskData.timeArr || '', // 多个活动时间的数组
+        taskList: taskData.taskList || '', // 子活动列表
+      });
+      wx.setNavigationBarTitle({
+        title: '编辑活动'
+      })
+    } else {
+      // 获取用户信息
+      console.log(getApp().globalData.userInfo);
+      this.setData({
+        userId: getApp().globalData.userInfo.openid,
+      });
+    }
   },
   // 展开时间日历
   onDisplay() {
     if (this.data.taskList.length == 0) {
       Notify({ type: 'warning', message: '主活动时间在添加子活动后不可修改，请妥善选择' });
+      if (!this.data.isChildIndex) {
+        this.setData({ 
+          minDate: new Date(+dayjs().year()-1, +dayjs().month(), dayjs().date()).getTime(),// 时间日历的最小时间
+          maxDate: new Date(+dayjs().year()+1, +dayjs().month(), dayjs().date()).getTime(), // 时间日历的最大时间
+        });
+      }
       this.setData({ showCalender: true });
     } else {
       Notify({ type: 'danger', message: '删除所有子活动后，方可更改主活动时间！' });
@@ -229,7 +255,7 @@ Page({
         minDate:new Date(this.data.beginTime).getTime(),
         maxDate:new Date(this.data.endTime).getTime(),
       });
-    } else {
+    } else if (this.data.dateType == 'multiple') {
       // 主活动是多个日期，子活动可 单个日期、多个日期
       let confirmText = '确定';
       let calcleText = '取消';
@@ -375,9 +401,9 @@ Page({
         if(data.data.code == 200) {
           Notify({ type: 'success', message: '创建活动成功！' });
           // 跳转回活动列表页
-          // wx.switchTab({
-          //   url: '../list/index',
-          // })
+          wx.switchTab({
+            url: '../list/index',
+          })
         } else {
           Notify({ type: 'danger', message: '创建活动失败！' });
         }

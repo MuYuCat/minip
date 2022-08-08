@@ -1,4 +1,5 @@
 import Notify from '../miniprogram_npm/@vant/weapp/notify/notify';
+const dayjs = require('dayjs');
 
 const chackData =(data) => {
   let isResult = 'true';
@@ -39,6 +40,33 @@ const chackData =(data) => {
   return isResult;
 }
 
+const isFinishTask = (data) => {
+  switch (data.dateType) {
+    case 'multiple' : {
+      const dateArr = data.dateArr.split(',');
+      if (dayjs().isBefore(dayjs(dateArr[0]))) {
+        return 'before';
+      } else if (dayjs().isAfter(dayjs(dateArr[dateArr.length-1]))) {
+        return 'after';
+      } else if (data.dateArr.includes(dayjs().format('YYYY-MM-DD'))) {
+        return 'ing';
+      } else {
+        return 'between';
+      }
+    }
+    default: {
+      if (dayjs().isBefore(dayjs(data.beginTime))) {
+        return 'before';
+      } else if (dayjs().isAfter(dayjs(data.beginTime))) {
+        return 'after';
+      } else {
+        return 'ing';
+      }
+    }
+  }
+}
+
 module.exports = {
-  chackData
+  chackData,
+  isFinishTask
 }
