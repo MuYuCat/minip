@@ -68,3 +68,16 @@
   font-weight: 800;
   color: #80A492;
 }
+
+.errorPage {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  justify-content: space-around;
+  align-items: center;
+}
+.errorIcon {
+  width: 400rpx;
+  height: 400rpx;
+}

@@ -86,8 +86,9 @@
   height: 160rpx;
 }
 .taskBeforeIcon {
-  width: 130rpx;
-  height: 130rpx;
+  width: 150rpx;
+  height: 150rpx;
+  margin-right: 30rpx;
 }
 .taskSmallIcon {
   width: 40rpx;
@@ -108,5 +109,14 @@
 }
 .errorPage {
   height: 100vh;
-  line-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  justify-content: space-around;
+  align-items: center;
 }
+.taskCircle {
+  margin-right: 30rpx;
+}
+

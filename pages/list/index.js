@@ -14,6 +14,16 @@ Page({
     taskData: [], // 所有活动列表
     runningTask: [], // 正在进行中的任务
     silenceTask: [], // 未进行的任务
+    // 圆环配置
+    circleValue: 25,
+    gradientColor: {
+      '0%': '#ffd01e',
+      '100%': '#ee0a24',
+    },
+    // 打卡页面
+    showRecord: false, // 是否展示打卡页面
+    taskRecordData: [],  // 打卡数据
+    recordType: '', // 打卡页面类型
   },
 
   onLoad: function (options) {
@@ -35,14 +45,19 @@ Page({
     const runningTask = []; // 正在进行中的任务
     const silenceTask = []; // 未进行的任务
     data.map((task)=>{
-      task.status = getStatus(task);
-      console.log('task.status', task.status);
-      if(task.status === 'after') {
+      if (task.status == 'stop') {
         silenceTask.push(task);
       } else {
-        runningTask.push(task);
+        task.status = getStatus(task);
+        console.log('task.status', task.status);
+        if(task.status === 'after') {
+          silenceTask.push(task);
+        } else {
+          runningTask.push(task);
+        }
       }
     })
+    console.log('未完成活动', runningTask, '已完成活动', silenceTask);
     this.setData({
       taskData: data,
       silenceTask: silenceTask,
@@ -64,10 +79,16 @@ Page({
       method: 'POST',
       success(data){
         if(data.data.code == 200) {
-          console.log('查询用户信息', data.data.data);
           const userTaskData = data.data.data;
+          console.log('用户活动', userTaskData);
+          const usefulTaskData = [];
+          userTaskData.map((task)=>{
+            if (task.status !== 'delect') {
+              usefulTaskData.push(task);
+            }
+          });
           // 获取任务信息
-          self.getTaskStatus(userTaskData);
+          self.getTaskStatus(usefulTaskData);
         } else {
           // 查询不到用户信息/新增用户
           console.log('查询不到用户信息', data);
@@ -83,13 +104,15 @@ Page({
   jump2show(e){
     const index = e.currentTarget.dataset.index;
     const type = e.currentTarget.dataset.type;
-    if (type) {
+    if (type == 'view') {
+      console.log('jump2show view', this.data.silenceTask, index, this.data.silenceTask[index]);
       wx.navigateTo({
-        url: `/pages/addTask/index?type=${type || ''}&taskData=${JSON.stringify(this.data.silenceTask[index])}`
+        url: `/pages/addTask/index?type=${type || ''}&taskData=${JSON.stringify(this.data.silenceTask[index] || [])}`
       })
     } else {
+      console.log('jump2show edit', this.data.runningTask, index, this.data.runningTask[index]);
       wx.navigateTo({
-        url: `/pages/addTask/index?taskData=${JSON.stringify(this.data.runningTask[index])}`
+        url: `/pages/addTask/index?type=${type || ''}&taskData=${JSON.stringify(this.data.runningTask[index] || [])}`
       })
     }
   },
@@ -108,5 +131,37 @@ Page({
         showFinish: isChange,
       });
     }
+  },
+
+  // 跳转打卡页面
+  jump2record (e) {
+    const index = e.currentTarget.dataset.index;
+    const type = e.currentTarget.dataset.type;
+    if (type == 'view') {
+      console.log('jump2record view', this.data.silenceTask, index, this.data.silenceTask[index]);
+      this.setData({
+        recordType: type || '',
+        showRecord:true,
+        taskRecordData: this.data.silenceTask[index] || [],
+      })
+    } else {
+      console.log('jump2record edit', this.data.runningTask, index, this.data.runningTask[index]);
+      this.setData({
+        recordType: type || '',
+        showRecord:true,
+        taskRecordData:this.data.runningTask[index] || [],
+        // taskRecordData: JSON.stringify(this.data.runningTask[index] || []),
+      })
+    }
+  },
+  // 关闭打卡页面
+  closeShowRecord() {
+    console.log('父组件关闭弹窗')
+    this.onLoad();
+    this.getTask(getApp().globalData.userInfo && getApp().globalData.userInfo.openid || '');
+    this.setData({
+      showRecord:false,
+    })
   }
+
 })

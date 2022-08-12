@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "van-icon": "@vant/weapp/icon/index",
-    "AddIcon": "/components/addIcon/addIcon"
+    "van-circle": "@vant/weapp/circle/index",
+    "AddIcon": "/components/addIcon/addIcon",
+    "RecoreShow": "/components/addRecord/addRecord"
   },
   "navigationBarTitleText": "活动列表"
 }

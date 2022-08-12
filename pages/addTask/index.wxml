@@ -1,9 +1,12 @@
 <view class="createTask">
   <view class="taskItem">
   <!-- 活动名称 -->
-    <view class="nameTitle" bindtap="showAllData">
-      <van-icon name="star" color="#EA5514"/>
-      活动名称
+    <view class="nameTitle">
+      <view bindtap="showAllData">
+        <van-icon name="star" color="#EA5514"/>
+        活动名称
+      </view>
+      <van-button plain type="info" color="#D24735" class="stopbtn" bindtap="stopTask" wx:if="{{type == 'edit'}}">终止活动</van-button>
     </view>
     <van-field
       placeholder-style="{{errorMsg == 'taskName' ? 'color: #ee0a24' : 'color: #999'}}"
@@ -28,15 +31,15 @@
         <view class="{{ dateType === 'range' ? 'clickType': 'garyType' }}" bindtap="changeType" data-datetype="range">区间日期</view>
       </view>
     </view>
-    <van-cell title="{{timeTitle}}" value="{{ selectDate }}" bind:click="onDisplay" class="{{errorMsg == 'taskTime' && !selectDate ? 'redFont' : ''}}" />
+    <van-cell title="{{timeTitle}}" value="{{ selectDate }}" bind:click="onDisplay" class="{{(errorMsg == 'taskTime' && !selectDate) ? 'redFont' : type == 'view' ? 'opacityShow' : ''}}" />
   <!-- 活动描述 -->
     <view class="nameTitle">活动概述</view>
     <van-field
-      model:value="{{type !== 'view' ? taskMsg : taskMsg || ' ' }}"
-      placeholder-style="color: #999"
+      placeholder-style="{{errorMsg == 'taskMsg' ? 'color: #ee0a24' : 'color: #999'}}"
+      model:value="{{taskMsg}}"
+      placeholder="{{ taskMsg ? '' : '请输入活动概况' }}"
       size="large"
       type="textarea"
-      placeholder="请输入活动概况"
       clearable="{{true}}"
       autosize
       border="{{ true }}"
@@ -88,6 +91,7 @@
             border="{{ false }}"
             required="{true}"
             disabled="{{type == 'view'}}"
+            class="childTimeShow"
           />
           <!-- 活动描述 -->
           <van-field
@@ -109,7 +113,7 @@
     </view>
   <!-- 添加子活动 -->
     <view class="addTask" bindtap="addTaskList" wx:if="{{type !== 'view'}}">
-      <image class="isAddTaskIcon" src="../../image/addTask.png"></image>
+      <image class="isAddTaskIcon" src="../../image/addTask2.png"></image>
       <view>添加子活动</view>
     </view>
   <!-- 时间选择器 -->
@@ -145,7 +149,13 @@
       <view class="cancleTask" bindtap="cancleTask">取消</view>
       <view class="confirmTask" bindtap="confirmTask">确定</view>
     </view>
+    <!-- <van-button plain type="info" color="#D24735" class="stopbtn addTask" bindtap="delTask" wx:else>终止活动</van-button> -->
+    <view class="addTask" bindtap="delTask" wx:else>
+      <image class="isAddTaskIcon" src="../../image/delTask.png"></image>
+      <view>删除活动</view>
+    </view>
   <van-notify id="van-notify" />
   <van-toast id="van-toast" />
+  <van-dialog id="van-dialog" />
   </view>
 </view>

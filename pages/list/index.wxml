@@ -10,7 +10,7 @@
     <!-- 待完成数据 -->
     <view wx:if="{{showNoFinish}}" class="ifShow">
       <view wx:for="{{runningTask}}" wx:for-item='taskItem' wx:key='index' class="taskItem noFinish">
-        <view class="taskContent" bindtap="jump2show" data-index="{{index}}">
+        <view class="taskContent" bindtap="jump2show" data-index="{{index}}" data-type="edit">
           <view class="taskName">{{taskItem.taskName}}</view>
           <view class="taskMsg" wx:if="{{taskItem.taskMsg}}">
             <image class="taskSmallIcon" src="../../image/showText.png"></image>
@@ -22,8 +22,17 @@
           </view>
         </view>
         <image class="taskBeforeIcon" src="../../image/before.png" wx:if="{{taskItem.status == 'before'}}"></image>
-        <!-- <image class="taskIcon" src="../../image/no_sign_in.png"></image> -->
-        <image class="taskIcon" src="../../image/sign_in.png" wx:else></image>
+        <van-circle 
+          class="taskCircle" 
+          value="{{ taskItem.progress || 0 }}" 
+          text="{{ taskItem.progress || 0}}%" 
+          color="{{gradientColor}}" 
+          stroke-width="6" 
+          size="80" 
+          wx:else
+          bindtap="jump2record"
+          data-index="{{index}}" 
+          data-type="edit" />
       </view>
     </view>
     <!-- 已完成 -->
@@ -34,7 +43,7 @@
     </view>
     <!-- 已完成数据 -->
     <view wx:if="{{showFinish}}" class="ifShow">
-      <view wx:for="{{silenceTask}}" wx:for-item='taskItem' wx:key='index' class="taskItem noFinish">
+      <view wx:for="{{silenceTask}}" wx:for-item='taskItem' wx:key='index' class="taskItem">
         <view class="taskContent" bindtap="jump2show" data-index="{{index}}" data-type="view">
           <view class="taskName">{{taskItem.taskName}}</view>
           <view class="taskMsg" wx:if="{{taskItem.taskMsg}}">
@@ -46,7 +55,16 @@
             <view class="taskSmallContent">{{taskItem.selectDate}}</view>
           </view>
         </view>
-        <image class="taskIcon" src="../../image/task_no_finish.png"></image>
+        <van-circle 
+          class="taskCircle" 
+          value="{{ taskItem.progress || 0 }}" 
+          text="{{ taskItem.progress || 0}}%" 
+          color="{{gradientColor}}" 
+          stroke-width="6" 
+          size="80"
+          bindtap="jump2record"
+          data-index="{{index}}" 
+          data-type="view"/>
       </view>
     </view>
   </view>
@@ -56,4 +74,6 @@
   </view>
   <!-- 新增活动图标 -->
   <AddIcon ></AddIcon>
+  <!-- 展示打卡组件 -->
+  <RecoreShow wx:if="{{showRecord}}" bind:closeShowRecord="closeShowRecord" isType="{{recordType}}" isData="{{taskRecordData}}"></RecoreShow>
 </view>

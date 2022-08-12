@@ -31,7 +31,7 @@
   background-color: #fff;
 }
 .dateGridLess {
-  height: 56rpx;
+  height: 46rpx;
   overflow: hidden;
 }
 .gridItem {
@@ -73,6 +73,7 @@
   text-align: center;
   background-color: #fff;
   margin-bottom: 10rpx;
+  padding: 30rpx 0;
 }
 .panelShow {
   height: 40vh;
@@ -84,4 +85,17 @@
   margin-top: 20rpx;
   font-weight: 800;
   color: #80A492;
+}
+
+.errorPage {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  justify-content: space-around;
+  align-items: center;
+}
+.errorIcon {
+  width: 400rpx;
+  height: 400rpx;
 }

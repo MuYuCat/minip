@@ -42,18 +42,16 @@
         "miniprogramNpmDistDir": "./"
       }
     ],
-    "minifyWXSS": true,
-    "lazyloadPlaceholderEnable": false,
-    "useStaticServer": true,
-    "showES6CompileOption": false,
-    "disableUseStrict": false,
-    "useCompilerPlugins": false,
-    "minifyWXML": true
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.25.0",
   "appid": "wx6a9b40f48a1759da",
   "projectname": "minip_study",
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
   "condition": {
     "search": {
       "list": []
@@ -73,9 +71,5 @@
     "miniprogram": {
       "list": []
     }
-  },
-  "editorSetting": {
-    "tabIndent": "insertSpaces",
-    "tabSize": 2
   }
 }

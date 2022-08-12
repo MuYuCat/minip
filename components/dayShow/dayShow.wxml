@@ -18,8 +18,8 @@
   </view>
   <!-- 展示活动信息 -->
   <view class="isDayPanel">
-    <view class="panelShow">
-      测试数据
+    <view class="panelShow errorPage">
+      <image src="../../image/error_time_show.png"></image>
     </view>
   </view>
 </view>

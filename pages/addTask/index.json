@@ -7,9 +7,10 @@
     "van-calendar": "@vant/weapp/calendar/index",
     "van-swipe-cell": "@vant/weapp/swipe-cell/index",
     "van-notify": "@vant/weapp/notify/index",
-    "van-toast": "@vant/weapp/toast/index",
     "van-picker": "@vant/weapp/picker/index",
     "van-popup": "@vant/weapp/popup/index",
-    "van-icon": "@vant/weapp/icon/index"
+    "van-icon": "@vant/weapp/icon/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-dialog": "@vant/weapp/dialog/index"
   }
 }

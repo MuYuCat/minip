@@ -10,7 +10,7 @@
   flex-direction: column;
   flex-wrap: nowrap;
   align-content: space-around;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
 }
 .errorIcon {

@@ -15,8 +15,8 @@
   </view>
   <!-- 展示活动信息 -->
   <van-action-sheet show="{{ showPanel }}" title="{{panelTitle}}"  bind:close="closePanel" close-on-click-overlay='true' z-index="{{150}}">
-    <view class="panelShow">
-      测试数据
+    <view class="panelShow errorPage">
+      <image src="../../image/error_time_show.png"></image>
     </view>
     <view class="addTask" bindtap="jump2Add">
       + 新建活动

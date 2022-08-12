@@ -1,6 +1,6 @@
 // pages/addTask/index.js
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
-import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import {chackData} from '../../utils/check';
 import { baseUrl } from '../../config/api';
 
@@ -13,6 +13,7 @@ Page({
    */
   data: {
     type: '', // 页面类型 是否为view
+    taskId: '', // 活动Id
     // 上传数据
     userId: '', // 用户id
     taskName: '', // 活动名称
@@ -24,6 +25,7 @@ Page({
     timeArr: [], // 多个活动时间的数组
     timeTitle: '点击选择活动时间', // 日历时间的提示语
     taskList: [], // 子活动列表
+    delList: [], // 删除的子活动列表
     // 本地数据
     showCalender: false, // 是否打开日历选择器
     showPicker: false, // 是否打开时间选择器
@@ -40,17 +42,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
+    console.log('options', options);
     if (options.type) {
       this.setData({
         type: options.type
       })
     }
+    options.type == 'view' && wx.setNavigationBarTitle({
+      title: '查看活动'
+    })
+    options.type == 'edit' && wx.setNavigationBarTitle({
+      title: '编辑活动'
+    })
     if (options.taskData) {
       const taskData = JSON.parse(options.taskData);
-      console.log(options.taskData, taskData);
+      console.log('taskData', taskData);
       this.setData({
         userId: taskData.userId || '', // 用户id
+        taskId: taskData.taskId || '', // 任务id
         taskName: taskData.taskName || '', // 活动名称
         taskMsg: taskData.taskMsg || '', // 活动概况
         dateType: taskData.dateType || '', // 主活动的时间类型 默认区间日期
@@ -58,13 +67,11 @@ Page({
         beginTime: taskData.beginTime || '', // 活动开始时间
         endTime: taskData.endTime || '', // 活动结束时间
         dateArr: taskData.dateArr || '', // 多个活动时间的数组
-        timeArr: taskData.timeArr || '', // 多个活动时间的数组
+        timeArr: taskData.timeArr || taskData.dateArr.split(',') || '', // 多个活动时间的数组
         timeTitle: taskData.timeTitle || '点击选择活动时间', // 多个活动时间的数组
         taskList: taskData.taskList || '', // 子活动列表
+        isDateType: taskData.dateType,
       });
-      wx.setNavigationBarTitle({
-        title: '编辑活动'
-      })
     } else {
       // 获取用户信息
       console.log(getApp().globalData.userInfo);
@@ -72,9 +79,6 @@ Page({
         userId: getApp().globalData.userInfo.openid,
       });
     }
-    options.type == 'view' && wx.setNavigationBarTitle({
-      title: '查看活动'
-    })
   },
   // 展开时间日历
   onDisplay() {
@@ -149,6 +153,7 @@ Page({
         this.setData({
           showCalender: false,
           timeArr: selectDate,
+          dateArr: selectDate.join(','),
           selectDate: `选择了 ${event.detail.length} 个日期`,
           timeTitle: '已选择多个活动时间'
         });
@@ -376,10 +381,15 @@ Page({
     if(['right', 'left'].includes(event.detail)) {
       const taskIndex = event.currentTarget.dataset.taskindex;
       const beforeList = this.data.taskList;
+      let delList = this.data.delList;
+      if (this.data.taskList[taskIndex].taskId){
+        delList.push(this.data.taskList[taskIndex]);
+      }
       beforeList.splice(taskIndex, 1);
-      console.log('删除子活动', taskIndex, beforeList);
+      console.log('删除子活动', taskIndex, beforeList, delList);
       this.setData({
         taskList: beforeList,
+        delList: delList
       });
     }
   },
@@ -395,40 +405,150 @@ Page({
   confirmTask () {
     console.log('confirmTask');
     var self = this.data;
-    wx.request({
-      url: `${baseUrl}/wxTask/add`,
-      data: {
-        userId: self.userId,
-        taskName: self.taskName,
-        dateType: self.dateType,
-        beginTime: self.beginTime,
-        endTime: self.endTime,
-        dateArr: self.timeArr,
-        selectDate: self.selectDate,
-        taskMsg: self.taskMsg,
-        timeTitle: self.timeTitle,
-        taskList: JSON.stringify(self.taskList),
-      },
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: 'POST',
-      success(data){
-        if(data.data.code == 200) {
-          Notify({ type: 'success', message: '创建活动成功！' });
-          // 跳转回活动列表页
-          wx.switchTab({
-            url: '../list/index',
-          })
-        } else {
+    const checkTrue = chackData(self);
+    if(checkTrue === 'true') {
+      let isUrl = '';
+      let params = {};
+      if (this.data.type == 'edit') {
+        isUrl = `${baseUrl}/wxTask/edit`;
+        params = {
+          userId: self.userId || '',
+          taskId: self.taskId || '',
+          taskId: self.taskId || '',
+          taskName: self.taskName || '',
+          dateType: self.dateType || '',
+          beginTime: self.beginTime || '',
+          endTime: self.endTime || '',
+          dateArr: self.dateArr || '',
+          selectDate: self.selectDate || '',
+          taskMsg: self.taskMsg || '',
+          timeTitle: self.timeTitle || '',
+          timeTitle: self.timeTitle || '',
+          timeTitle: self.timeTitle || '',
+          taskList: JSON.stringify(self.taskList  || []),
+          delList: JSON.stringify(self.delList  || []),
+        }
+      } else {
+        isUrl = `${baseUrl}/wxTask/add`;
+        params = {
+          userId: self.userId || '',
+          taskId: self.taskId || '',
+          taskId: self.taskId || '',
+          taskName: self.taskName || '',
+          dateType: self.dateType || '',
+          beginTime: self.beginTime || '',
+          endTime: self.endTime || '',
+          dateArr: self.timeArr || '',
+          selectDate: self.selectDate || '',
+          taskMsg: self.taskMsg || '',
+          timeTitle: self.timeTitle || '',
+          timeTitle: self.timeTitle || '',
+          timeTitle: self.timeTitle || '',
+          taskList: JSON.stringify(self.taskList  || []),
+        }
+      }
+      console.log(this.data.type, isUrl);
+      wx.request({
+        url: isUrl,
+        data: params,
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        method: 'POST',
+        success(data){
+          if(data.data.code == 200) {
+            Notify({ type: 'success', message: '创建活动成功！' });
+            // 跳转回活动列表页
+            wx.switchTab({
+              url: '../list/index',
+            })
+          } else {
+            Notify({ type: 'danger', message: '创建活动失败！' });
+          }
+        },
+        file: res => {
           Notify({ type: 'danger', message: '创建活动失败！' });
         }
-      },
-      file: res => {
-        Notify({ type: 'danger', message: '创建活动失败！' });
-      }
-    })
+      })
+    } else {
+      this.setData({
+        errorMsg: checkTrue
+      });
+    }
   },
+  // 终止活动
+  stopTask () {
+    var self = this.data;
+    Dialog.confirm({
+      message: '中止后信息不再更新，确定中止该任务吗？',
+    })
+      .then(() => {
+        wx.request({
+          url: `${baseUrl}/wxTask/stop`,
+          data: {
+            taskId: self.taskId,
+          },
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          method: 'POST',
+          success(data){
+            if(data.data.code == 200) {
+              Notify({ type: 'success', message: '成功中止活动！' });
+              // 跳转回活动列表页
+              wx.switchTab({
+                url: '../list/index',
+              })
+            } else {
+              Notify({ type: 'danger', message: '中止活动失败！' });
+            }
+          },
+          file: res => {
+            Notify({ type: 'danger', message: '中止活动失败！' });
+          }
+        })
+      })
+      .catch(() => {
+        // on cancel
+      });
+  },
+  // 删除活动
+  delTask () {
+    var self = this.data;
+    Dialog.confirm({
+      message: '删除后任务不可查看，确定删除该任务吗？',
+    })
+      .then(()=>{
+        wx.request({
+          url: `${baseUrl}/wxTask/delect`,
+          data: {
+            taskId: self.taskId,
+          },
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          method: 'POST',
+          success(data){
+            if(data.data.code == 200) {
+              Notify({ type: 'success', message: '成功删除活动！' });
+              // 跳转回活动列表页
+              wx.switchTab({
+                url: '../list/index',
+              })
+            } else {
+              Notify({ type: 'danger', message: '删除活动失败！' });
+            }
+          },
+          file: res => {
+            Notify({ type: 'danger', message: '删除活动失败！' });
+          }
+        })
+      })
+      .catch(()=>{
+
+      })
+  },
+
 
   // 展示测试数据
   showAllData () {
