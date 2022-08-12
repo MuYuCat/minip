@@ -206,3 +206,12 @@
 .childTimeShow .van-field__body{
   font-size: 24rpx;
 }
+/* 
+::-webkit-scrollbar {
+  display: none !important;
+}
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  color: transparent !important;
+} */

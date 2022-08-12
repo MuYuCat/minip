@@ -58,6 +58,7 @@
 }
 .custom-button {
   height: 40rpx;
+  line-height: 40rpx;
   border: 1px solid #A9BE7B;
   border-radius: 40rpx;
   background-color: #C0D695;

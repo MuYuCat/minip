@@ -12,3 +12,13 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+
+
+/* ::-webkit-scrollbar {
+  display: none !important;
+}
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  color: transparent !important;
+} */

@@ -22,17 +22,21 @@
           </view>
         </view>
         <image class="taskBeforeIcon" src="../../image/before.png" wx:if="{{taskItem.status == 'before'}}"></image>
-        <van-circle 
-          class="taskCircle" 
-          value="{{ taskItem.progress || 0 }}" 
-          text="{{ taskItem.progress || 0}}%" 
-          color="{{gradientColor}}" 
-          stroke-width="6" 
-          size="80" 
-          wx:else
-          bindtap="jump2record"
-          data-index="{{index}}" 
-          data-type="edit" />
+        <view class='isIndex' wx:else>
+          <van-circle
+            wx:if="{{!showRecord}}"
+            class="taskCircle" 
+            value="{{ taskItem.progress || 0 }}" 
+            text="{{ taskItem.progress || 0}}%" 
+            color="{{gradientColor}}" 
+            stroke-width="6" 
+            size="80" 
+            bindtap="jump2record"
+            data-index="{{index}}" 
+            data-type="edit" 
+          />
+          <image class="taskBeforeIcon" src="../../image/update.png" wx:else></image>
+        </view>
       </view>
     </view>
     <!-- 已完成 -->
@@ -55,16 +59,19 @@
             <view class="taskSmallContent">{{taskItem.selectDate}}</view>
           </view>
         </view>
-        <van-circle 
+        <van-circle
+          wx:if="{{!showRecord}}"
           class="taskCircle" 
           value="{{ taskItem.progress || 0 }}" 
           text="{{ taskItem.progress || 0}}%" 
           color="{{gradientColor}}" 
           stroke-width="6" 
-          size="80"
+          size="80" 
           bindtap="jump2record"
           data-index="{{index}}" 
-          data-type="view"/>
+          data-type="view" 
+        />
+        <image class="taskBeforeIcon" src="../../image/update.png" wx:else></image>
       </view>
     </view>
   </view>
