@@ -4,6 +4,7 @@
   max-height: 900rpx;
   overflow-y: auto;
   padding: 40rpx;
+  margin-bottom: 100rpx;
 }
 .recordName {
   width: 60%;

@@ -31,19 +31,36 @@ Component({
       })
     } else {
       const childTask = fatherData.taskList;
+      let runningTask = []; // 正在进行中的任务
+      let beforeTask = []; // 未开始的任务
+      let silenceTask = []; // 未进行的任务
+
       childTask.map((task)=> {
         if (fatherData.status == 'stop') {
           task.status = 'stop';
           task.showStatus = '已中止';
+          silenceTask.push(task);
         } else {
           task.status = getStatus(task);
           // console.log('task.status', task.status);
           task.showStatus = getTag(task.status);
+          if(task.status === 'after') {
+            task.showDetail = false;
+            silenceTask.push(task);
+          } else if(['before','between'].includes(task.status)) {
+            task.showDetail = false;
+            beforeTask.push(task);
+          } else {
+            task.showDetail = true;
+            runningTask.push(task);
+          }
         }
       })
+      runningTask = [...runningTask, ...beforeTask, ...silenceTask];
+      console.log()
       this.setData({
         justOne: false,
-        childTask: childTask,
+        childTask: runningTask,
       })
     }
   },

@@ -43,8 +43,9 @@ Page({
 
   // 给任务加状态
   getTaskStatus: function (data) {
-    const runningTask = []; // 正在进行中的任务
-    const silenceTask = []; // 未进行的任务
+    let runningTask = []; // 正在进行中的任务
+    let beforeTask = []; // 未开始的任务
+    let silenceTask = []; // 未进行的任务
     data.map((task)=>{
       if (task.status == 'stop') {
         silenceTask.push(task);
@@ -53,11 +54,14 @@ Page({
         console.log('task.status', task.status);
         if(task.status === 'after') {
           silenceTask.push(task);
+        } else if(task.status === 'before') {
+          beforeTask.push(task);
         } else {
           runningTask.push(task);
         }
       }
     })
+    runningTask = [...runningTask, ...beforeTask];
     console.log('未完成活动', runningTask, '已完成活动', silenceTask);
     this.setData({
       taskData: data,
