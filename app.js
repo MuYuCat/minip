@@ -48,6 +48,10 @@ App({
         if(data.data.code == 200) {
           // 有用户信息就全局引用
           self.globalData.userInfo = data.data.data.rows[0];
+          if (self.userInfoCallback){
+            console.log('回调方法');
+            self.userInfoCallback(data.data.data.rows[0]);
+          }
         } else {
           // 查询不到用户信息/新增用户
           self.addUser(id);

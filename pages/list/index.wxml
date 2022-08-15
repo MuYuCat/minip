@@ -2,7 +2,7 @@
   <!-- 展示活动列表 -->
   <view wx:if="{{taskData.length!==0}}" class="showAllData">
     <!-- 待完成 -->
-    <view class="taskName" bindtap="closeFinish" data-type="noFinish">
+    <view class="taskName isFlex" bindtap="closeFinish" data-type="noFinish">
       <van-icon name="arrow-down" wx:if="{{showNoFinish}}" />
       <van-icon name="arrow" wx:else />
       <view class="isTitle">待完成</view>
@@ -40,7 +40,7 @@
       </view>
     </view>
     <!-- 已完成 -->
-    <view class="taskName" bindtap="closeFinish" data-type="isFinish">
+    <view class="taskName isFlex" bindtap="closeFinish" data-type="isFinish">
       <van-icon name="arrow-down" wx:if="{{showFinish}}" />
       <van-icon name="arrow" wx:else />
       <view class="isTitle">已完成</view>

@@ -1,5 +1,6 @@
 <!--index.wxml-->
 <view class="calendar"> 
+  <!-- 头部组件 -->
   <view class="select_date">
     <!-- 当前选择时间 -->
     <view class="data-show" bindtap="showPop">

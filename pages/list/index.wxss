@@ -74,6 +74,7 @@
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
+  width: 100%;
 }
 .taskDate {
   font-size: 28rpx;
@@ -131,4 +132,7 @@
 }
 .isIndex {
   z-index: 1 !important;
+}
+.isFlex {
+  display: flex;
 }

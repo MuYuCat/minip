@@ -26,6 +26,7 @@ Page({
     timeTitle: '点击选择活动时间', // 日历时间的提示语
     taskList: [], // 子活动列表
     delList: [], // 删除的子活动列表
+    progress: 0, // 活动进度
     // 本地数据
     showCalender: false, // 是否打开日历选择器
     showPicker: false, // 是否打开时间选择器
@@ -71,6 +72,7 @@ Page({
         timeTitle: taskData.timeTitle || '点击选择活动时间', // 多个活动时间的数组
         taskList: taskData.taskList || '', // 子活动列表
         isDateType: taskData.dateType,
+        progress: taskData.progress,
       });
     } else {
       // 获取用户信息
@@ -423,8 +425,7 @@ Page({
           selectDate: self.selectDate || '',
           taskMsg: self.taskMsg || '',
           timeTitle: self.timeTitle || '',
-          timeTitle: self.timeTitle || '',
-          timeTitle: self.timeTitle || '',
+          progress: self.progress || 0,
           taskList: JSON.stringify(self.taskList  || []),
           delList: JSON.stringify(self.delList  || []),
         }
@@ -441,8 +442,6 @@ Page({
           dateArr: self.timeArr || '',
           selectDate: self.selectDate || '',
           taskMsg: self.taskMsg || '',
-          timeTitle: self.timeTitle || '',
-          timeTitle: self.timeTitle || '',
           timeTitle: self.timeTitle || '',
           taskList: JSON.stringify(self.taskList  || []),
         }
