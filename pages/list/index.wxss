@@ -12,11 +12,14 @@
 }
 .taskName {
   height: 60rpx;
-  width: 90%;
+  width: 100%;
   font-size: 34rpx;
   font-weight: 500;
   line-height: 60rpx;
-  display: flex;
+  /* display: flex; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   /* background-color: #EBEEE8;
   border-radius: 20rpx;
   padding-left: 18rpx; */
@@ -95,6 +98,13 @@
   height: 40rpx;
 }
 .taskSmallContent {
+  margin-left: 10rpx;
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.taskSmallDataContent {
   margin-left: 10rpx;
 }
 .taskIconFinish {

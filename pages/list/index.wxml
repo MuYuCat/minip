@@ -18,7 +18,7 @@
           </view>
           <view class="taskDate" wx:if="{{taskItem.selectDate}}">
             <image class="taskSmallIcon" src="../../image/showTime.png"></image>
-            <view class="taskSmallContent">{{taskItem.selectDate}}</view>
+            <view class="taskSmallDataContent">{{taskItem.selectDate}}</view>
           </view>
         </view>
         <image class="taskBeforeIcon" src="../../image/before.png" wx:if="{{taskItem.status == 'before'}}"></image>
