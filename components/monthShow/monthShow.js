@@ -20,6 +20,12 @@ Component({
     isSelectDay: '', // 选择日期
     showPanel: false, // 展示活动信息面板
     panelTitle: '', // 活动信息面板标题
+    thisDayInfo: {}, // 所选时间的活动信息
+  },
+
+  // 对值进行预处理
+  ready: function () {
+    console.log('monthShow获取父组件的值', this.properties.isDate, this.properties.isTime);
   },
 
   /**
@@ -31,17 +37,26 @@ Component({
       console.log('changeClickDay', e.currentTarget.dataset.istime, e.currentTarget.dataset.systime);
       const isClickDay = e.currentTarget.dataset.istime;
       const isSysDay = e.currentTarget.dataset.systime;
-      if (isClickDay && isClickDay !== this.thisDay) {
+      if (isClickDay) {
+        let thisDayInfo = {};
+        let isSelectDay = '';
+        let isChildList = [];
+        console.log(this.properties.isDate);
+        this.properties.isDate.map((date)=> {
+          if (date && date.date && date.date == isClickDay) {
+            thisDayInfo = date
+          }
+        })
+        if (isClickDay && isClickDay !== this.thisDay) {
+          isSelectDay= `${isClickDay}`
+        } else {
+          isSelectDay= ''
+        }
         this.setData({
           showPanel: true,
           panelTitle: `${dayjs(isSysDay).format('M')}月${isClickDay}日`,
-          isSelectDay: `${isClickDay}`
-        });
-      } else {
-        this.setData({
-          showPanel: true,
-          panelTitle: `${dayjs(isSysDay).format('M')}月${isClickDay}日`,
-          isSelectDay: ''
+          isSelectDay: isSelectDay,
+          thisDayInfo: thisDayInfo
         });
       }
     },

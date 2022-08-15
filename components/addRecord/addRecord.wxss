@@ -29,13 +29,13 @@
 }
 .recordTag {
   height: 40rpx;
-    border: 2px solid #A9BE7B;
-    font-size: 27rpx;
-    border-radius: 26rpx;
-    padding: 6rpx 10rpx;
-    line-height: 40rpx;
-    color: #A9BE7B;
-    font-weight: 400;
+  border: 2px solid #A9BE7B;
+  font-size: 27rpx;
+  border-radius: 26rpx;
+  padding: 6rpx 10rpx;
+  line-height: 40rpx;
+  color: #A9BE7B;
+  font-weight: 400;
 }
 .taskItem {
   /* height: 160rpx; */

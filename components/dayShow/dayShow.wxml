@@ -9,7 +9,7 @@
   <!-- 日期 方块 -->
   <view class="{{!showLess ? 'dateGrid' : 'dateGrid dateGridLess'}}">
     <view class="gridItem" wx:for="{{isDate}}" wx:for-item='gridItem' wx:key='gridItem' bindtap="changeClickDay" data-isTime="{{gridItem}}" data-sysTime="{{isTime}}">
-      <view class="{{!!isSelectDay? isSelectDay == gridItem? 'gridTitle showIsDay': thisDay == gridItem? 'gridTitle showIsDay hasClick': 'gridTitle': thisDay == gridItem ? 'gridTitle showIsDay' : 'gridTitle'}}">{{gridItem || ''}}</view>
+      <view class="{{!!isSelectDay? isSelectDay == gridItem.date? 'gridTitle showIsDay': thisDay == gridItem.date? 'gridTitle showIsDay hasClick': 'gridTitle': thisDay == gridItem.date ? 'gridTitle showIsDay' : 'gridTitle'}}">{{gridItem.date || ''}}</view>
     </view>
   </view>
   <view class="showLess" bindtap="changeShowLess">

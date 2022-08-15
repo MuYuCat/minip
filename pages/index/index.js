@@ -27,13 +27,13 @@ Page({
     runningTask: [], // 活动进行中
   },
 
-  // 初始化时间参数
+  // 初始化 用户信息 & 时间信息
   onLoad: function (options) {
     // 获取用户信息 以及 当前时间信息
     console.log('userInfo', getApp().globalData.userInfo);
     if (getApp().globalData.userInfo && getApp().globalData.userInfo != '') {
       this.setData({
-        userInfo: true,
+        userInfo: getApp().globalData.userInfo,
       });
     } else {
       // 声明回调函数获取app.js onLaunch中接口调用成功后设置的globalData数据
@@ -41,9 +41,9 @@ Page({
         console.log('回调userInfoCallback');
         if (userInfo != '') {
           this.setData({
-            userInfo: true,
+            userInfo: getApp().globalData.userInfo,
           });
-          // this.getTask(getApp().globalData.userInfo && getApp().globalData.userInfo.openid || '');
+          this.getTask(getApp().globalData.userInfo && getApp().globalData.userInfo.openid || '');
         }
       }
     }
@@ -55,15 +55,78 @@ Page({
       thisDay: dayjs().format('D'),
       currentDate: dayjs().valueOf(),
     });
-    this.getDateData();
+    this.getDateData(dayjs().format('YYYY-MM-DD'));
   },
-  // 加载活动信息
+
+  // 获取活动信息
   onShow: function () {
-    // 获取任务信息
-    this.onLoad();
+    // this.onLoad();
     this.getTask(getApp().globalData.userInfo && getApp().globalData.userInfo.openid || '');
   },
-  // 给任务加状态
+
+  // 活动与日期相关联
+  bundledTaskTime () {
+    console.log('活动信息', this.data.runningTask, '时间信息', this.data.calendar.daysArr);
+    let dateArr = this.data.calendar.daysArr; // 日历信息
+    let taskArr = this.data.runningTask; // 活动信息
+    const thisYear = this.data.thisYear; // 当前选择的年
+    const thisMonth = this.data.thisMonth; // 当前选择的月
+    dateArr.map((date)=>{
+      if (date.date) {
+        date.taskList = [];
+      }
+    })
+    taskArr.map((task)=>{
+      // console.log('这个活动是', task);
+      if (!task.userId) return 
+      if(task.dateType == 'range'){
+        // 区间日期
+        if(dayjs(task.endTime).isBefore(`${thisYear}-${thisMonth}`)) {
+          // console.log('这个活动已经结束')
+        } else if(dayjs(task.beginTime).isAfter(dayjs(`${thisYear}-${thisMonth}`).endOf('month'))) {
+          // console.log('这个活动尚未开始')
+        } else {
+          dateArr.map((date)=>{
+            // console.log('这个活动在进行中', date.date, date.taskList)
+            if (date.date) {
+              const thisDate = dayjs(`${thisYear}-${thisMonth}-${date.date}`).format('YYYY-MM-DD')
+              if(!dayjs(thisDate).isBefore(task.beginTime) && !dayjs(thisDate).isAfter(task.endTime)) {
+                date.taskList.push(task)
+              }
+            }
+          })
+        }
+      } else if (task.dateType == 'multiple') {
+        // 多个日期
+        dateArr.map((date)=>{
+          // console.log('这个活动在进行中', date.date, date.taskList)
+          if (date.date) {
+            const thisDate = dayjs(`${thisYear}-${thisMonth}-${date.date}`).format('YYYY-MM-DD')
+            if(task.dateArr.includes(thisDate)) {
+              date.taskList.push(task)
+            }
+          }
+        })
+      } else {
+        // 单个日期
+        dateArr.map((date)=>{
+          // console.log('这个活动在进行中', date.date, date.taskList)
+          if (date.date) {
+            const thisDate = dayjs(`${thisYear}-${thisMonth}-${date.date}`).format('YYYY-MM-DD')
+            if(task.beginTime == thisDate) {
+              date.taskList.push(task)
+            }
+          }
+        })
+      }
+    })
+    // console.log('绑定后的dateArr', dateArr);
+    this.setData({
+      ['calendar.daysArr']: dateArr,
+    });
+  },
+
+  // 获取活动状态
   getTaskStatus: function (data) {
     let runningTask = []; // 正在进行中的任务
     let beforeTask = []; // 未开始的任务
@@ -84,14 +147,16 @@ Page({
       }
     })
     // runningTask = [...runningTask, ...beforeTask];
-    console.log('未完成活动', runningTask, '已完成活动', silenceTask);
+    console.log('进行中活动', runningTask, '未开始活动', beforeTask, '已完成活动', silenceTask);
     this.setData({
       taskData: data,
       silenceTask: silenceTask,
       beforeTask: beforeTask,
       runningTask: runningTask,
     });
+    this.bundledTaskTime();
   },
+
   // userId 查找Task
   getTask (id) {
     var self = this;
@@ -107,7 +172,7 @@ Page({
       success(data){
         if(data.data.code == 200) {
           const userTaskData = data.data.data;
-          console.log('用户活动', userTaskData);
+          console.log('查询活动信息', userTaskData);
           const usefulTaskData = [];
           userTaskData.map((task)=>{
             if (task.status !== 'delect') {
@@ -132,11 +197,13 @@ Page({
     console.log('修改时间');
     this.setData({ popCanShow: true });
   },
+
   // 关闭修改日期弹框
   closePop: function () {
     console.log('修改时间');
     this.setData({ popCanShow: false });
   },
+
   // 修改日期
   changeDate(event) {
     this.setData({
@@ -146,8 +213,11 @@ Page({
       currentDate: event.detail,
       popCanShow: false
     });
+    console.log('修改后的日期为：', dayjs(event.detail).format('YYYY-MM-DD'))
     this.getDateData(dayjs(event.detail).format('YYYY-MM-DD'))
+    this.bundledTaskTime();
   },
+
   // 修改展示类型
   changeType(e) {
     console.log('changeType', e);
@@ -155,6 +225,7 @@ Page({
       dateType: e.currentTarget.dataset['datetype']
     });
   },
+
   // 获取月详细信息
   getDateData(date) {
     console.log(`现在是${dayjs(date).format('YYYY-MM-DD')},本月一共有${dayjs(date).daysInMonth()}天,第一天是周${dayjs(date).startOf('month').day()}`);
@@ -163,7 +234,10 @@ Page({
     let isDaysArr = [];
     // 获取日期数组
     for(let index = 0; index < isDays ; index++) {
-      isDaysArr[isWeek+index] = +index + 1
+      isDaysArr[isWeek+index] = {
+        date: +index + 1,
+        taskList: []
+      }
     }
     console.log('fixdaysArr', isDaysArr.length, isDaysArr.length%7);
     // 补充末尾时间
