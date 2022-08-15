@@ -3,7 +3,8 @@
     "van-icon": "@vant/weapp/icon/index",
     "van-circle": "@vant/weapp/circle/index",
     "AddIcon": "/components/addIcon/addIcon",
-    "RecoreShow": "/components/addRecord/addRecord"
+    "RecoreShow": "/components/addRecord/addRecord",
+    "van-notify": "@vant/weapp/notify/index"
   },
   "navigationBarTitleText": "活动列表"
 }

@@ -83,4 +83,6 @@
   <AddIcon ></AddIcon>
   <!-- 展示打卡组件 -->
   <RecoreShow wx:if="{{showRecord}}" bind:closeShowRecord="closeShowRecord" isType="{{recordType}}" isData="{{taskRecordData}}"></RecoreShow>
+  <!-- 消息通知模块 -->
+  <van-notify id="van-notify" />
 </view>

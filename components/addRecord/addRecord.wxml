@@ -10,10 +10,13 @@
     <!-- 子活动打卡 -->
     <view wx:for="{{childTask}}" wx:for-item='taskItem' wx:key='index' class="taskItem" wx:if="{{childTask.length !== 0}}">
       <view class="itemName">
+        <van-icon class="isArrowIcon" name="arrow-down" wx:if="{{taskItem.showDetail}}" bindtap="showDetail" data-index="{{index}}" data-type="{{false}}"/>
+        <van-icon class="isArrowIcon" name="arrow" wx:else bindtap="showDetail" data-type="{{true}}" data-index="{{index}}" />
         {{taskItem.taskName}}
         <van-tag round size="medium" color="#A9BE7B">{{taskItem.showStatus}}</van-tag>
+        <van-tag round size="medium" class="showProgress" plain color="#A9BE7B" wx:if="{{!taskItem.showDetail}}"> {{taskItem.progress || '0'}}%</van-tag>
       </view>
-      <view class="clickAdd">
+      <view class="clickAdd" wx:if="{{taskItem.showDetail}}">
         <image 
           class="{{taskItem.status == 'ing' && isType !== 'view' ? 'addIcon' : 'addIcon opacity'}}" 
           src="../../image/minus-circle.png"
@@ -76,6 +79,5 @@
       <view class="cancleTask" bindtap="cancleProgress">取消</view>
       <view class="confirmTask" bindtap="confirmProgress">确定</view>
     </view>
-    <van-notify id="van-notify" />
   </view>
 </van-popup>

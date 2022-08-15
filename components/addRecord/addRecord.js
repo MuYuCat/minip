@@ -117,9 +117,10 @@ Component({
           changeProgress = event.detail.value;
         }
         this.setData({
-          ['isData.progress']: changeProgress,
+          ['childTask.progress']: changeProgress,
         });
       }
+      // this.confirmProgress();
     },
     // 确定修改进度
     confirmProgress(e) {
@@ -151,6 +152,15 @@ Component({
     // 放弃修改
     cancleProgress() {
       this.onClose();
+    },
+    // 子项目展开滑动条
+    showDetail (event) {
+      const index = event.currentTarget.dataset.index;
+      const type = event.currentTarget.dataset.type;
+      console.log(index,type);
+      this.setData({
+        [`childTask[${index}].showDetail`]: type,
+      });
     }
   }
 

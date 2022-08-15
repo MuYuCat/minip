@@ -2,8 +2,9 @@
 .isAddTask {
   position: fixed;
   bottom: 50rpx;
-  right: 20rpx;
+  left: 50%;
   width: 100rpx;
+  margin-left: -30px;
   height: 100rpx;
   border-radius: 50%;
   background-color: #99BCAC;

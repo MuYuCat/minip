@@ -1,6 +1,7 @@
 // pages/index/index.js
 import { baseUrl } from '../../config/api';
 import { getStatus } from '../../utils/check';
+import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 
 Page({
 
