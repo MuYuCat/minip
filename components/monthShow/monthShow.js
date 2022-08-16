@@ -19,7 +19,7 @@ Component({
     thisDay: dayjs().format('D'), // 当日日期
     isSelectDay: '', // 选择日期
     showPanel: false, // 展示活动信息面板
-    panelTitle: '', // 活动信息面板标题
+    panelTitle: '', // 活动信息面板标题k
     thisDayInfo: {}, // 所选时间的活动信息
   },
 
@@ -37,16 +37,20 @@ Component({
       console.log('changeClickDay', e.currentTarget.dataset.istime, e.currentTarget.dataset.systime);
       const isClickDay = e.currentTarget.dataset.istime;
       const isSysDay = e.currentTarget.dataset.systime;
+      const isShowDay = dayjs(isSysDay).format('YYYY-MM') + `-${isClickDay}`;
+      console.log('展示的时间', isShowDay);
       if (isClickDay) {
         let thisDayInfo = {};
         let isSelectDay = '';
-        let isChildList = [];
-        console.log(this.properties.isDate);
+        // let isChildList = [];
         this.properties.isDate.map((date)=> {
           if (date && date.date && date.date == isClickDay) {
-            thisDayInfo = date
+            thisDayInfo = date;
+            // const fixDate = this.selectTask(thisDayInfo.taskList, isShowDay);
+            // console.log('date', thisDayInfo, fixDate);
           }
         })
+        console.log('当天日期', thisDayInfo);
         if (isClickDay && isClickDay !== this.thisDay) {
           isSelectDay= `${isClickDay}`
         } else {

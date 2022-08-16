@@ -10,6 +10,13 @@
   <view class="{{!showLess ? 'dateGrid' : 'dateGrid dateGridLess'}}">
     <view class="gridItem" wx:for="{{isDate}}" wx:for-item='gridItem' wx:key='gridItem' bindtap="changeClickDay" data-isTime="{{gridItem}}" data-sysTime="{{isTime}}">
       <view class="{{!!isSelectDay? isSelectDay == gridItem.date? 'gridTitle showIsDay': thisDay == gridItem.date? 'gridTitle showIsDay hasClick': 'gridTitle': thisDay == gridItem.date ? 'gridTitle showIsDay' : 'gridTitle'}}">{{gridItem.date || ''}}</view>
+      <view wx:if="{{gridItem.usefulTask != 0 && gridItem.date}}">
+        <view class="dot justso" wx:if="{{gridItem.usefulTask > 0 && gridItem.usefulTask <= 10}}"></view>
+        <view class="dot justok" wx:if="{{gridItem.usefulTask > 10 && gridItem.usefulTask <= 20}}"></view>
+        <view class="dot notok" wx:if="{{gridItem.usefulTask> 20 && gridItem.usefulTask <= 25}}"></view>
+        <view class="dot bad" wx:if="{{gridItem.usefulTask>25}}"></view>
+      </view>
+      <!-- <view class="dot"></view> -->
     </view>
   </view>
   <view class="showLess" bindtap="changeShowLess">
@@ -18,8 +25,32 @@
   </view>
   <!-- 展示活动信息 -->
   <view class="isDayPanel">
-    <view class="panelShow errorPage">
+    <view class="panelShow errorPage" wx:if="{{!thisDayInfo.taskList || thisDayInfo.taskList == 0}}">
       <image src="../../image/error_time_show.png"></image>
+    </view>
+    <view wx:for="{{thisDayInfo.taskList}}" wx:for-item='taskItem' wx:key='taskItem'>
+      <view class="showTop">
+        <view class="showTopLeft">
+          <van-icon name="circle" class="showIcon" />
+          <view class="showTaskName"> {{taskItem.taskName}}</view>
+        </view>
+        <view class="showTopRight">
+          <view class="showTaskTag"> {{taskItem.progress}}%</view>
+        </view>
+        <!-- <view class="showTaskTime"> {{taskItem.dateArr || taskItem.selectDate}}</view> -->
+      </view>
+      <view class="showItem" wx:for="{{taskItem.showTaskList.isTaskList}}" wx:for-item='taskChild' wx:key='taskChild'>
+        <view class="showTopLeft">
+          <van-icon name="circle" class="showIcon" />
+          <view class="showTaskName"> {{taskChild.taskName}}</view>
+        </view>
+        <view class="showTopRight">
+          <view class="showTaskTag"> {{taskChild.progress}}%</view>
+        </view>
+      </view>
+    </view>
+    <view class="addTask" bindtap="jump2Add">
+      + 新建活动
     </view>
   </view>
 </view>

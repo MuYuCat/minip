@@ -123,6 +123,10 @@
   background-color: #E18A3B;
   color: #EBEDDF;
 }
+.bad{
+  background-color: #C12C1F;
+  color: #EBEDDF;
+}
 .showTop {
   display: flex;
   flex-direction: row;
@@ -191,3 +195,7 @@
   line-height: 30rpx;
   font-size: 26rpx;
 }
+/* .mainTask {
+  height: 40rpx;
+  line-height: 40rpx;
+} */

@@ -1,4 +1,4 @@
-// components/dayShow/dayShow.js
+// components/monthShow/monthShow.js
 import {dateShow} from './config';
 const dayjs = require('dayjs');
 
@@ -18,9 +18,28 @@ Component({
     dateShow: dateShow, // 日期标题
     thisDay: dayjs().format('D'), // 当日日期
     isSelectDay: '', // 选择日期
-    panelTitle: '', // 活动信息面板标题
+    showPanel: false, // 展示活动信息面板
+    panelTitle: '', // 活动信息面板标题k
+    thisDayInfo: {}, // 所选时间的活动信息
     showLess: false // 是否缩减日期
-   },
+  },
+
+  // 对值进行预处理
+  ready: function () {
+    console.log('monthShow获取父组件的值', this.properties.isDate, dayjs(this.properties.isTime).format('YYYY-MM-DD'));
+    const isClickDay = dayjs(this.properties.isTime).format('D');
+    let thisDayInfo = {};
+    this.properties.isDate.map((date) => {
+      // console.log(date);
+      if (date && date.date && date.date == isClickDay) {
+        thisDayInfo = date;
+      }
+    })
+    this.setData({
+      thisDayInfo: thisDayInfo
+    });
+    console.log('thisDayInfo', thisDayInfo);
+  },
 
   /**
    * 组件的方法列表
@@ -29,17 +48,32 @@ Component({
     // 点击选择时间
     changeClickDay(e) {
       console.log('changeClickDay', e.currentTarget.dataset.istime, e.currentTarget.dataset.systime);
-      const isClickDay = e.currentTarget.dataset.istime;
+      const isClickDay = e.currentTarget.dataset.istime.date;
       const isSysDay = e.currentTarget.dataset.systime;
-      if (isClickDay && isClickDay !== this.thisDay) {
+      const isShowDay = dayjs(isSysDay).format('YYYY-MM') + `-${isClickDay}`;
+      console.log('展示的时间', isShowDay);
+      if (isClickDay) {
+        let thisDayInfo = {};
+        let isSelectDay = '';
+        // let isChildList = [];
+        this.properties.isDate.map((date)=> {
+          if (date && date.date && date.date == isClickDay) {
+            thisDayInfo = date;
+            // const fixDate = this.selectTask(thisDayInfo.taskList, isShowDay);
+            // console.log('date', thisDayInfo, fixDate);
+          }
+        })
+        console.log('当天日期', thisDayInfo);
+        if (isClickDay && isClickDay !== this.thisDay) {
+          isSelectDay= `${isClickDay}`
+        } else {
+          isSelectDay= ''
+        }
         this.setData({
+          showPanel: true,
           panelTitle: `${dayjs(isSysDay).format('M')}月${isClickDay}日`,
-          isSelectDay: `${isClickDay}`
-        });
-      } else {
-        this.setData({
-          panelTitle: `${dayjs(isSysDay).format('M')}月${isClickDay}日`,
-          isSelectDay: ''
+          isSelectDay: isSelectDay,
+          thisDayInfo: thisDayInfo
         });
       }
     },
@@ -50,10 +84,16 @@ Component({
         showLess: isChange
       });
     },
+    // 关闭面板
+    closePanel () {
+      this.setData({
+        showPanel: false,
+      });
+    },
     // 跳转新增
     jump2Add(e) {
       wx.navigateTo({
-        url: `/pages/list/index?time=${this.panelTitle}`
+        url: `/pages/addTask/index?time=${this.panelTitle}`
       })
     } 
   }

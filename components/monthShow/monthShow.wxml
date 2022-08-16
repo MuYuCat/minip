@@ -17,10 +17,11 @@
         </view>
       </view> -->
       <!-- 只展示颜色 -->
-      <view wx:if="{{gridItem.taskList.length != 0 && gridItem.date}}">
-        <view class="colorWall justso" wx:if="{{gridItem.taskList.length >=0 && gridItem.taskList.length <= 2}}">{{gridItem.taskList.length}}</view>
-        <view class="colorWall justok" wx:if="{{gridItem.taskList.length >=3 && gridItem.taskList.length <= 5}}">{{gridItem.taskList.length}}</view>
-        <view class="colorWall notok" wx:if="{{gridItem.taskList.length>=6}}">{{gridItem.taskList.length}}</view>
+      <view wx:if="{{gridItem.usefulTask != 0 && gridItem.date}}">
+        <view class="colorWall justso" wx:if="{{gridItem.usefulTask >0 && gridItem.usefulTask <= 10}}">{{gridItem.usefulTask}}</view>
+        <view class="colorWall justok" wx:if="{{gridItem.usefulTask > 10 && gridItem.usefulTask <= 20}}">{{gridItem.usefulTask}}</view>
+        <view class="colorWall notok" wx:if="{{gridItem.usefulTask >20 && gridItem.usefulTask <= 25}}">{{gridItem.usefulTask}}</view>
+        <view class="colorWall bad" wx:if="{{gridItem.usefulTask >25}}">{{gridItem.usefulTask}}</view>
       </view>
     </view>
   </view>
@@ -29,7 +30,7 @@
     <view class="panelShow errorPage" wx:if="{{!thisDayInfo.taskList || thisDayInfo.taskList == 0}}">
       <image src="../../image/error_time_show.png"></image>
     </view>
-    <view wx:for="{{thisDayInfo.taskList}}" wx:for-item='taskItem' wx:key='taskItem'>
+    <view wx:for="{{thisDayInfo.taskList}}" wx:for-item='taskItem' wx:key='taskItem' class="mainTask">
       <view class="showTop">
         <view class="showTopLeft">
           <van-icon name="circle" class="showIcon" />
@@ -40,7 +41,7 @@
         </view>
         <!-- <view class="showTaskTime"> {{taskItem.dateArr || taskItem.selectDate}}</view> -->
       </view>
-      <view class="showItem" wx:for="{{taskItem.taskList}}" wx:for-item='taskChild' wx:key='taskChild'>
+      <view class="showItem" wx:for="{{taskItem.showTaskList.isTaskList}}" wx:for-item='taskChild' wx:key='taskChild'>
         <view class="showTopLeft">
           <van-icon name="circle" class="showIcon" />
           <view class="showTaskName"> {{taskChild.taskName}}</view>

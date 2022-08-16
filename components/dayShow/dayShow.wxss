@@ -99,3 +99,106 @@
   width: 400rpx;
   height: 400rpx;
 }
+.isDayPanel {
+  margin-top: 10rpx;
+  padding: 40rpx 20rpx;
+  background-color: #fff;
+  overflow-y: auto;
+}
+.showTop {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4rpx 30rpx;
+}
+.showTopLeft {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 40rpx;
+  line-height: 40rpx;
+  width: 80%;
+}
+.showIcon {
+  width: 16rpx;
+  height: 16rpx;
+  line-height: 40rpx;
+  margin-right: 36rpx;
+}
+.showTaskName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
+  font-size: 34rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+.showTaskTag {
+  height: 40rpx;
+  border: 2px solid #A9BE7B;
+  font-size: 27rpx;
+  border-radius: 26rpx;
+  padding: 6rpx 10rpx;
+  line-height: 40rpx;
+  color: #A9BE7B;
+  font-weight: 400;
+}
+.showTaskTime {
+  width: 20%;
+  font-size: 24rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.showTopRight {
+  width: 20%;
+  text-align: center;
+}
+.showItem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10rpx 33rpx 0 90rpx;
+  font-size: 26rpx;
+}
+.isChild{
+  height: 30rpx;
+  line-height: 30rpx;
+  font-size: 26rpx;
+}
+.dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  margin-top: -8rpx;
+}
+.gridItem{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.justso {
+  background-color: #C0D695;
+  color: #206864
+}
+.justok {
+  background-color: #80A492;
+  color: #EBEEE8;
+}
+.notok {
+  background-color: #E18A3B;
+  color: #EBEDDF;
+}
+.bad{
+  background-color: #C12C1F;
+  color: #EBEDDF;
+}
