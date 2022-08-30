@@ -8,44 +8,46 @@
     </view>
     <van-divider />
     <!-- 子活动打卡 -->
-    <view wx:for="{{childTask}}" wx:for-item='taskItem' wx:key='index' class="taskItem" wx:if="{{childTask.length !== 0}}">
-      <view class="itemName">
-        <van-icon class="isArrowIcon" name="arrow-down" wx:if="{{taskItem.showDetail}}" bindtap="showDetail" data-index="{{index}}" data-type="{{false}}"/>
-        <van-icon class="isArrowIcon" name="arrow" wx:else bindtap="showDetail" data-type="{{true}}" data-index="{{index}}" />
-        {{taskItem.taskName}}
-        <van-tag round size="medium" color="#A9BE7B">{{taskItem.showStatus}}</van-tag>
-        <van-tag round size="medium" class="showProgress" plain color="#A9BE7B" wx:if="{{!taskItem.showDetail}}"> {{taskItem.progress || '0'}}%</van-tag>
-      </view>
-      <view class="clickAdd" wx:if="{{taskItem.showDetail}}">
-        <image 
-          class="{{taskItem.status == 'ing' && isType !== 'view' ? 'addIcon' : 'addIcon opacity'}}" 
-          src="../../image/minus-circle.png"
-          bindtap="onDrag"
-          data-index="{{index}}"
-          data-type="minus"
-        ></image>
-        <van-slider 
-          class="itemSlider" 
-          value="{{taskItem.progress}}" 
-          bar-height="4px" 
-          active-color="#A4C9CC" 
-          use-button-slot
-          disabled="{{taskItem.status!=='ing' || isType == 'view'}}"
-          bind:drag="onDrag"
-          data-index="{{index}}">
-          <view class="custom-button" slot="button">{{ taskItem.progress || 0}}</view>
-        </van-slider>
-        <image 
-          class="{{taskItem.status == 'ing' && isType !== 'view' ? 'addIcon' : 'addIcon opacity'}}" 
-          src="../../image/plus-circle.png"
-          bindtap="onDrag"
-          data-index="{{index}}"
-          data-type="plus"
+    <view wx:if="{{childTask.length !== 0}}">
+      <view wx:for="{{childTask}}" wx:for-item='taskItem' wx:key='index' class="taskItem" wx:if="{{childTask.length !== 0}}">
+        <view class="itemName">
+          <van-icon class="isArrowIcon" name="arrow-down" wx:if="{{taskItem.showDetail}}" bindtap="showDetail" data-index="{{index}}" data-type="{{false}}"/>
+          <van-icon class="isArrowIcon" name="arrow" wx:else bindtap="showDetail" data-type="{{true}}" data-index="{{index}}" />
+          {{taskItem.taskName}}
+          <van-tag round size="medium" color="#A9BE7B">{{taskItem.showStatus}}</van-tag>
+          <van-tag round size="medium" class="showProgress" plain color="#A9BE7B" wx:if="{{!taskItem.showDetail}}"> {{taskItem.progress || '0'}}%</van-tag>
+        </view>
+        <view class="clickAdd" wx:if="{{taskItem.showDetail}}">
+          <image 
+            class="{{taskItem.status == 'ing' && isType !== 'view' ? 'addIcon' : 'addIcon opacity'}}" 
+            src="../../image/minus-circle.png"
+            bindtap="onDrag"
+            data-index="{{index}}"
+            data-type="minus"
           ></image>
+          <van-slider 
+            class="itemSlider" 
+            value="{{taskItem.progress}}" 
+            bar-height="4px" 
+            active-color="#A4C9CC" 
+            use-button-slot
+            disabled="{{taskItem.status!=='ing' || isType == 'view'}}"
+            bind:drag="onDrag"
+            data-index="{{index}}">
+            <view class="custom-button" slot="button">{{ taskItem.progress || 0}}</view>
+          </van-slider>
+          <image 
+            class="{{taskItem.status == 'ing' && isType !== 'view' ? 'addIcon' : 'addIcon opacity'}}" 
+            src="../../image/plus-circle.png"
+            bindtap="onDrag"
+            data-index="{{index}}"
+            data-type="plus"
+            ></image>
+        </view>
       </view>
     </view>
     <!-- 主活动打卡 -->
-    <view wx:if="{{childTask.length == 0}}">
+    <view wx:else>
       <view class="clickAdd">
         <image 
           class="{{isData.status == 'ing' ? 'addIcon' : 'addIcon opacity'}}" 

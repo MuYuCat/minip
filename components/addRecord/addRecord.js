@@ -134,7 +134,7 @@ Component({
           changeProgress = event.detail.value;
         }
         this.setData({
-          ['childTask.progress']: changeProgress,
+          ['isData.progress']: changeProgress,
         });
       }
       // this.confirmProgress();
