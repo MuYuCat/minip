@@ -81,7 +81,7 @@ Component({
       const main = event.currentTarget.dataset.main;
       // console.log('onDrag', index, type);
       if(!main) {
-        if (this.data.childTask[index].status !== 'ing') return
+        // if (this.data.childTask[index].status !== 'ing') return
         // 子活动的增填删改
         const allRecord = this.data.childTask.length * 100; // 总分数
         let thisRecord = 0; // 目前得分
@@ -115,7 +115,7 @@ Component({
           ['isData.progress']: taskProgress,
         });
       } else {
-        if (this.properties.isData.status !== 'ing') return
+        // if (this.properties.isData.status !== 'ing') return
         // 主活动的增添删改
         let changeProgress = 0;
         if (type == 'plus') {

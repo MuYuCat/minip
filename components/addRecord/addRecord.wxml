@@ -19,7 +19,7 @@
         </view>
         <view class="clickAdd" wx:if="{{taskItem.showDetail}}">
           <image 
-            class="{{taskItem.status == 'ing' && isType !== 'view' ? 'addIcon' : 'addIcon opacity'}}" 
+            class="{{taskItem.status == 'ing' && isType !== 'view' ? 'addIcon' : 'addIcon'}}" 
             src="../../image/minus-circle.png"
             bindtap="onDrag"
             data-index="{{index}}"
@@ -31,13 +31,13 @@
             bar-height="4px" 
             active-color="#A4C9CC" 
             use-button-slot
-            disabled="{{taskItem.status!=='ing' || isType == 'view'}}"
+            disabled="{{false}}"
             bind:drag="onDrag"
             data-index="{{index}}">
             <view class="custom-button" slot="button">{{ taskItem.progress || 0}}</view>
           </van-slider>
           <image 
-            class="{{taskItem.status == 'ing' && isType !== 'view' ? 'addIcon' : 'addIcon opacity'}}" 
+            class="{{taskItem.status == 'ing' && isType !== 'view' ? 'addIcon' : 'addIcon'}}" 
             src="../../image/plus-circle.png"
             bindtap="onDrag"
             data-index="{{index}}"

@@ -183,6 +183,16 @@ Page({
     let beforeTask = []; // 未开始的任务
     let silenceTask = []; // 未进行的任务
     data.map((task)=>{
+      console.log('获取活动状态', task);
+      if (Array.isArray(task.taskList) && task.taskList.length !== 0) {
+        let updateProgress = 0;
+        task.taskList.map((subTask)=>{
+          updateProgress = updateProgress + subTask.progress;
+        })
+        const allRecord = task.taskList.length * 100; 
+        task.progress = Math.round((updateProgress/allRecord)*100);
+        console.log('更新数据', task.taskList, allRecord, updateProgress)
+      }
       if (task.status == 'stop') {
         silenceTask.push(task);
       } else {
